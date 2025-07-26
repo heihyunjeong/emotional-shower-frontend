@@ -1,0 +1,127 @@
+/* container & header */
+.terms-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    min-height: 100vh;
+    background: var(--color-background);
+  }
+  
+  .terms-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .back-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+  }
+  
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  
+  .progress {
+    width: 25%;
+    height: 100%;
+    background: #ff3b30;
+    border-radius: 2px;
+  }
+  
+  /* title */
+  .terms-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  /* term list */
+  .term-list {
+    flex: 1;
+  }
+  
+  .term-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .term-item:hover {
+    background: #f9f9f9;
+  }
+  
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--color-gray-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    font-size: 0.8rem;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  
+  .checkbox.checked {
+    background: #ff3b30;
+    border-color: #ff3b30;
+  }
+  
+  .term-label {
+    flex: 1;
+    font-size: 1rem;
+    color: var(--color-primary);
+  }
+  
+  .arrow {
+    font-size: 1.2rem;
+    color: var(--color-gray-medium);
+  }
+  
+  /* next button */
+  .next-btn {
+    width: 100%;
+    padding: 1rem;
+    margin-top: auto;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    background: var(--color-gray-light);
+    color: var(--color-background);
+    cursor: not-allowed;
+    transition: background 0.2s ease-in-out;
+  }
+  
+  .next-btn:enabled {
+    background: #ff3b30;
+    cursor: pointer;
+  }
+  
+  /* responsive */
+  @media (max-width: 400px) {
+    .terms-title {
+      font-size: 1.1rem;
+    }
+    .term-item {
+      padding: 0.6rem 0.8rem;
+    }
+    .next-btn {
+      padding: 0.8rem;
+    }
+  }
+  

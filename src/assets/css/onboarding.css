@@ -1,0 +1,121 @@
+.onboarding-container {
+    width: 360px;
+    height: 800px;
+    position: relative;
+    background: #FAFAFA;
+    overflow: hidden;
+    font-family: 'Pretendard', sans-serif;
+  }
+  
+  /* ✅ Centered Horizontally */
+  .image-placeholder {
+    width: 240px;
+    height: 240px;
+    position: absolute;
+    top: 148px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .image-label {
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    color: black;
+    line-height: 24px;
+    padding: 0;
+  }
+  
+  .text-group {
+    position: absolute;
+    top: 428px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+  
+  .main-title {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 36px;
+    color: #171717;
+    word-break: keep-all;
+  }
+  
+  .sub-title {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #737373;
+    word-break: keep-all;
+  }
+  
+  .indicator {
+    position: absolute;
+    top: 678px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 9px;
+  }
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: #E5E5E5;
+  }
+  
+  .dot.active {
+    background: #171717;
+  }
+  
+  .button-wrapper {
+    position: absolute;
+    top: 710px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    width: 320px;
+  }
+  
+  .start-button {
+    background-color: #EE534F;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .start-button-text {
+    width: 128px;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    text-align: center;
+  }
+  
+  .bottom-bar {
+    width: 139px;
+    height: 5px;
+    position: absolute;
+    top: 767px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    border-radius: 100px;
+  }
+  

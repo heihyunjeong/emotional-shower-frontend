@@ -1,0 +1,90 @@
+.container {
+    width: 360px;
+    height: 800px;
+    position: relative;
+    background: #FAFAFA;
+    overflow: hidden;
+  }
+  
+  /* Logo group */
+  .logo-group {
+    width: 221px;
+    height: 46px;
+    left: 69px;
+    top: 359px;
+    position: absolute;
+    overflow: hidden;
+  }
+  
+  .logo-part {
+    position: absolute;
+    background: #EE534F;
+  }
+  .part1 { width: 43.61px; height: 43.45px; left: 154.28px; top: 1.45px; }
+  .part2 { width: 46.18px; height: 46px; left: 39.92px; top: 0px; opacity: 0.99; }
+  .part3 { width: 38.49px; height: 43.45px; left: 88.65px; top: 1.27px; }
+  .part4 { width: 19.24px; height: 43.44px; left: 131.21px; top: 1.28px; }
+  .part5 { width: 19.24px; height: 43.44px; left: 201.76px; top: 1.28px; }
+  .part6 { width: 39.61px; height: 44.72px; left: 0px; top: 0.64px; opacity: 0.99; }
+  
+  .logo-cut {
+    position: absolute;
+    background: #FAFAFA;
+  }
+  .cut1 {
+    width: 68.42px;
+    height: 16.51px;
+    left: 6.09px;
+    top: 12.28px;
+  }
+  
+  .logo-circle {
+    position: absolute;
+    background: #FAFAFA;
+  }
+  .circle1 {
+    width: 15.21px;
+    height: 15.14px;
+    left: 15.89px;
+    top: 25.38px;
+  }
+  .circle2 {
+    width: 15.21px;
+    height: 15.15px;
+    left: 54.92px;
+    top: 19.32px;
+  }
+  
+  .logo-dot {
+    position: absolute;
+    background: #EE534F;
+  }
+  .dot1 {
+    width: 17.06px;
+    height: 17px;
+    left: 14.97px;
+    top: 24.45px;
+  }
+  .dot2 {
+    width: 17.06px;
+    height: 17px;
+    left: 53.99px;
+    top: 18.39px;
+  }
+  
+  .text-banner {
+    left: 107px;
+    top: 432px;
+    position: absolute;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: #EE534F;
+    font-size: 18px;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    line-height: 22px;
+    word-wrap: break-word;
+  }
+  

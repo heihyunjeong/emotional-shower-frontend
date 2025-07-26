@@ -1,0 +1,107 @@
+/* EasyLogin.css */
+
+.easy-login-container {
+  width: 100%;
+  height: 800px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.easy-login-content {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 제목 */
+.easy-login-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #171717;
+  text-align: center;
+  line-height: 36px;
+}
+
+.easy-login-sub {
+  font-size: 14px;
+  font-weight: 500;
+  color: #737373;
+  text-align: center;
+  line-height: 24px;
+}
+
+/* 버튼 공통 */
+.easy-login-button {
+  width: 100%;
+  height: 56px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  cursor: pointer;
+}
+
+/* 각 버튼 색상 */
+.kakao {
+  background-color: #fee500;
+}
+
+.naver {
+  background-color: #28d111;
+}
+
+.google {
+  background-color: transparent;
+  border: 1px solid #e1e1e1;
+}
+
+.apple {
+  background-color: #171717;
+}
+
+/* 아이콘 (임시 사각형 자리 표시용) */
+.easy-login-icon {
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border-radius: 4px;
+}
+
+/* 아이콘 구글/애플 특수처리 (선택적 커스터마이징 가능) */
+.google-icon {
+  background: linear-gradient(45deg, #fbc02d, #e53935, #4caf50, #1565c0);
+}
+
+.apple-icon {
+  background-color: white;
+}
+
+/* 텍스트 공통 */
+.easy-login-text {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+/* 텍스트 색상 */
+.kakao-text {
+  color: #171717;
+}
+
+.naver-text {
+  color: white;
+}
+
+.google-text {
+  color: #171717;
+}
+
+.apple-text {
+  color: white;
+}
