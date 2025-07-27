@@ -9,6 +9,8 @@ import Onboarding from "./pages/onboarding";
 import Welcome from "./pages/welcome";
 import EasyLogIn from "./pages/easyLogIn";
 import Terms from "./pages/terms";
+import Name from "./pages/name";
+import Phone from "./pages/phone";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/easylogin" element={<EasyLogIn />} />
           <Route path="/experimental" element={<Experimental />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/name" element={<Name />} />
+          <Route path="/phone" element={<Phone />} />
           {/* Redirect all other paths to /welcome */}
           <Route path="*" element={<Navigate to="/welcome" replace />} />
         </Routes>
