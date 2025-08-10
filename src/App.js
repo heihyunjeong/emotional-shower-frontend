@@ -11,6 +11,26 @@ import EasyLogIn from "./pages/easyLogIn";
 import Terms from "./pages/terms";
 import Name from "./pages/name";
 import Phone from "./pages/phone";
+// user
+  //home
+import UserHome from "./pages/user/userHome";
+import UserEquipmentSelect from "./pages/user/userEquipSel";
+import UserLocationSelect from "./pages/user/userLocSel";
+import UserPlanSelect from "./pages/user/userPlanSel";
+import UserStoringInfo from "./pages/user/userStorInf";
+import UserTerms from "./pages/user/userTerms";
+import UserPaymentMethod from "./pages/user/userPay";
+import UserPaymentComplete from "./pages/user/userPayComp";
+  //mypage
+import UserMyPage from "./pages/user/userMy";
+import UserMyCurrentProgress from "./pages/user/userMyProg";
+import UserMyCompletedProgress from "./pages/user/userMyProgComp";
+import UserMyStoredProgress from "./pages/user/userMyProgStored";
+import UserMyCancelingProgress from "./pages/user/userMyProgCancel";
+import UserMyCancelationConfirmationgProgress from "./pages/user/userMyProgCancelCon";
+import UserMyPaymentStored from "./pages/user/userMyPaymentStored";
+import UserMyPaymentPast from "./pages/user/userMyPaymentPast";
+import UserMyFAQ from "./pages/user/userMyFAQ";
 
 function App() {
   return (
@@ -25,6 +45,30 @@ function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/name" element={<Name />} />
           <Route path="/phone" element={<Phone />} />
+
+          {/*User*/}
+          <Route path="/home" element={<UserHome />} />          
+          <Route path="/storing/equipmentselection" element={<UserEquipmentSelect />} />   
+          <Route path="/storing/locationselection" element={<UserLocationSelect />} />   
+          <Route path="/storing/planselection" element={<UserPlanSelect />} />   
+          <Route path="/storing/storinginfo" element={<UserStoringInfo />} />   
+          <Route path="/storing/terms" element={<UserTerms />} />   
+          <Route path="/storing/paymentmethod" element={<UserPaymentMethod />} />   
+          <Route path="/storing/paymentcomplete" element={<UserPaymentComplete />} /> 
+          {/*User - Mypage */}
+          <Route path="/mypage" element={<UserMyPage />} />   
+          {/*User - Mypage - Progression */}
+          <Route path="/mypage/progress/inprogress" element={<UserMyCurrentProgress />} />   
+          <Route path="/mypage/progress/completed" element={<UserMyCompletedProgress />} />   
+          <Route path="/mypage/progress/stored" element={<UserMyStoredProgress />} />  
+          {/*User - Mypage - Payment */}
+          <Route path="/mypage/payment/stored" element={<UserMyPaymentStored />} />  
+          <Route path="/mypage/payment/past" element={<UserMyPaymentPast />} />  
+          <Route path="/mypage/payment/cancel" element={<UserMyCancelingProgress />} />  
+          <Route path="/mypage/payment/cancelconfirm" element={<UserMyCancelationConfirmationgProgress />} />  
+          {/*User - Mypage - FAQ */}
+          <Route path="/mypage/FAQ" element={<UserMyFAQ />} />  
+
           {/* Redirect all other paths to /welcome */}
           <Route path="*" element={<Navigate to="/welcome" replace />} />
         </Routes>

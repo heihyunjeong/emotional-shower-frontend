@@ -1,0 +1,265 @@
+/* userProgCancel.css */
+
+.history-cancel-page {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+}
+
+.header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.back-button {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.back-button .icon {
+  width: 12px;
+  height: 21px;
+  background: var(--black);
+}
+
+.page-title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-main);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.content {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+/* 취소 내역 카드 */
+.cancel-card {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #E5E5E5;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--white);
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-family: var(--font-main);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 29px;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-label {
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-medium);
+  line-height: 17px;
+}
+
+.item-value {
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: 500;
+  color: #202020;
+  line-height: 17px;
+  text-align: right;
+}
+
+/* 공통 분리선 */
+.separator-bar {
+  width: 100%;
+  height: 8px;
+  background: #F5F5F5;
+  margin: 20px 0;
+}
+
+/* 결제해지 유의사항 */
+.notice-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notice-title {
+  font-family: var(--font-main);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 29px;
+}
+
+.notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notice-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.notice-bullet {
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: 500;
+  color: #8D8C82;
+  line-height: 17px;
+}
+
+.notice-text {
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-medium);
+  line-height: 16px;
+}
+
+/* 기본 CTA */
+.cta-container {
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.cta-button {
+  width: 100%;
+  padding: 16px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+  text-align: center;
+  cursor: pointer;
+}
+
+/* 취소 및 환불 유의사항 */
+.refund-section {
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.refund-title {
+  font-family: var(--font-main);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 29px;
+}
+
+.refund-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.refund-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.refund-bullet {
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: 500;
+  color: #8D8C82;
+  line-height: 17px;
+}
+
+.refund-text {
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-medium);
+  line-height: 16px;
+}
+
+/* 환불 예상 금액 */
+.refund-amount-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  margin: 12px 0;
+}
+
+.refund-amount-label {
+  font-family: var(--font-main);
+  font-size: 16px;
+  font-weight: 500;
+  color: #525252;
+  line-height: 29px;
+}
+
+.refund-amount-value {
+  font-family: var(--font-main);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 29px;
+}
+
+/* 최종 CTA */
+.refund-cta-container {
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.refund-cta-button {
+  width: 100%;
+  padding: 16px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+  cursor: pointer;
+}

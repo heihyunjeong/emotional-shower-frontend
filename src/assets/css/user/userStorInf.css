@@ -1,0 +1,135 @@
+/* userConfirmation.css */
+
+.confirmation-container {
+  width: 100%;
+  max-width: 360px;
+  height: 800px;
+  margin: 0 auto;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+
+/* Progress Bar */
+.progress-bar {
+  position: absolute;
+  top: 104px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+.progress-bg {
+  width: 100%;
+  height: 4px;
+  background: #f5f5f5;
+}
+.progress-fill {
+  width: 240px; /* 240px fill length */
+  height: 4px;
+  background: #ff4e49;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Section Title */
+.section-title {
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  font-family: 'Pretendard', sans-serif;
+  color: #171717;
+  text-align: center;
+  white-space: pre-line;
+}
+
+/* Confirmation Form */
+.confirmation-form {
+  position: absolute;
+  top: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.form-item {
+  display: flex;
+  justify-content: space-between;
+}
+.label {
+  color: #A3A3A3;
+  font-size: 14px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 500;
+}
+.value {
+  color: #171717;
+  font-size: 14px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 600;
+}
+.divider {
+  width: 100%;
+  height: 2px;
+  background: #f5f5f5;
+  margin: 0;
+}
+
+/* Payment Summary */
+.payment-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 77, 88, 0.2);
+  border-radius: 8px;
+}
+.amount {
+  color: #171717;
+  font-size: 20px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+}
+
+/* Disclaimer Text */
+.disclaimer {
+  position: absolute;
+  top: 580px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  padding: 0 20px;
+  color: #A3A3A3;
+  font-size: 12px;
+  font-family: 'Pretendard Variable', sans-serif;
+  line-height: 18px;
+  white-space: pre-line;
+}
+
+/* Confirm Button */
+.cta-button {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  padding: 16px;
+  background: #ff4e49;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Pretendard', sans-serif;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

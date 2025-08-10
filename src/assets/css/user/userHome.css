@@ -1,0 +1,238 @@
+.storage-container {
+  width: 100%;
+  max-width: 360px;
+  height: 800px;
+  margin: 0 auto;
+  position: relative;
+  background: #FAFAFA;
+  overflow: hidden;
+}
+
+/* Background */
+.bg-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ellipse {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+}
+
+.white-ellipse {
+  width: 552px;
+  height: 552px;
+  left: 78px;
+  top: -276px;
+  background: white;
+  box-shadow: 160px 160px 160px;
+}
+
+.grey-ellipse {
+  width: 524px;
+  height: 524px;
+  left: -194px;
+  top: 374px;
+  background: #F5F5F5;
+  box-shadow: 160px 160px 160px;
+}
+
+.achievement-img {
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  left: 78px;
+  top: 249px;
+}
+
+/* Logo */
+.header-logo {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo-placeholder {
+  font-weight: bold;
+  font-size: 20px;
+  color: #171717;
+}
+
+/* Text and Chip Section */
+.text-chip {
+  position: absolute;
+  top: 108px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.main-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #171717;
+}
+
+.main-text .highlight {
+  color: #FF4E49;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+.main-text div {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+.sub-text {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22.4px;
+}
+
+.status-chip {
+  background: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.status-label {
+  font-size: 14px;
+  color: #D4D4D4;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+/* Card Section */
+.card-container {
+  position: absolute;
+  top: 498px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 0 20px 28px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.card {
+  flex: 1;
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.04));
+  border-radius: 20px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.10);
+  outline: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  background: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-text .title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #171717;
+  line-height: 22px;
+}
+
+.card-text .desc {
+  font-size: 12px;
+  font-weight: 400;
+  color: #171717;
+  line-height: 22px;
+}
+
+/* Navigation Bar */
+.navigation-bar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 100px;
+  background: white;
+  box-shadow: 0px -2px 14.8px rgba(198, 196, 185, 0.21);
+  border-top: 1px solid #ECEBE2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 66px;
+}
+
+.nav-item {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  position: relative;
+}
+
+.nav-icon {
+  width: 28px;
+  height: 28px;
+  background-color: #A3A3A3;
+  border-radius: 6px;
+}
+
+.home-icon {
+  background-color: #A3A3A3;
+}
+
+.gear-icon {
+  background-color: #A3A3A3;
+}
+
+.mypage-icon {
+  background-color: #FF4E49;
+}
+
+.nav-label {
+  font-size: 12px;
+  font-family: 'Pretendard';
+  font-weight: 700;
+  line-height: 16px;
+  color: #A3A3A3;
+}
+
+.active .nav-icon {
+  background-color: #FF4E49;
+}
+
+.active-label {
+  color: #FF4E49;
+}
