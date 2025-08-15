@@ -1,0 +1,128 @@
+/* container */
+.my-equip-basic {
+  position: relative;
+  width: 360px;
+  height: 800px;
+  margin: 0 auto;
+  background: #fff;
+  overflow: hidden;
+  font-family: Pretendard, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans",
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  color: #171717;
+}
+
+/* top area (req2: no OS status/home bars) */
+.topbar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.back-btn {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 0;
+  padding: 6px;
+  color: #000;
+  cursor: pointer;
+}
+.page-title {
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+/* main content (req3: vertical & centered) */
+.content {
+  padding: 24px 20px 120px; /* bottom space for CTA */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+}
+.screen-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #171717;
+}
+
+/* image placeholder */
+.img-box {
+  width: 128px;
+  height: 128px;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-box span {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #000;
+  text-align: center;
+}
+
+/* notes */
+.notes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+.notes li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.ex-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #171717;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 2px;
+}
+.notes li span:last-child {
+  flex: 1 1 auto;
+  color: #737373;
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+/* CTA */
+.cta-wrap {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+}
+.primary-btn {
+  width: 100%;
+  padding: 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #ff4e49;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  cursor: pointer;
+}
+.primary-btn:active {
+  opacity: 0.9;
+}

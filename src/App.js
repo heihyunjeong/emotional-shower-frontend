@@ -21,6 +21,13 @@ import UserStoringInfo from "./pages/user/userStorInf";
 import UserTerms from "./pages/user/userTerms";
 import UserPaymentMethod from "./pages/user/userPay";
 import UserPaymentComplete from "./pages/user/userPayComp";
+  //Equipment
+import UserEquipStored from "./pages/user/userEquipStored";
+import UserEquipmentDetail from "./pages/user/userEquipDetail";
+import UserEquipmentCheckOutWarning from "./pages/user/userEquipCheckOutWarn";
+import UserEquipmentCheckOutInput from "./pages/user/userEquipCheckOutInp";
+import UserEquipmentCheckOutLocation from "./pages/user/userEquipCheckOutLoc";
+
   //mypage
 import UserMyPage from "./pages/user/userMy";
 import UserMyCurrentProgress from "./pages/user/userMyProg";
@@ -31,6 +38,10 @@ import UserMyCancelationConfirmationgProgress from "./pages/user/userMyProgCance
 import UserMyPaymentStored from "./pages/user/userMyPaymentStored";
 import UserMyPaymentPast from "./pages/user/userMyPaymentPast";
 import UserMyFAQ from "./pages/user/userMyFAQ";
+import UserMyInfo from "./pages/user/userMyInfo";
+import UserMyInfoDeletePrerequisite from "./pages/user/userMyInfoDelPrereq";
+import UserMyInfoDelete from "./pages/user/userMyInfoDel";
+
 
 function App() {
   return (
@@ -55,6 +66,12 @@ function App() {
           <Route path="/storing/terms" element={<UserTerms />} />   
           <Route path="/storing/paymentmethod" element={<UserPaymentMethod />} />   
           <Route path="/storing/paymentcomplete" element={<UserPaymentComplete />} /> 
+          {/*User - StoredEquipment */}
+          <Route path="/equipment" element={<UserEquipStored />} /> 
+          <Route path="/equipment/detail" element={<UserEquipmentDetail />} /> 
+          <Route path="/equipment/checkout/warning" element={<UserEquipmentCheckOutWarning />} /> 
+          <Route path="/equipment/checkout/input" element={<UserEquipmentCheckOutInput />} /> 
+          <Route path="/equipment/checkout/location" element={<UserEquipmentCheckOutLocation />} /> 
           {/*User - Mypage */}
           <Route path="/mypage" element={<UserMyPage />} />   
           {/*User - Mypage - Progression */}
@@ -67,8 +84,11 @@ function App() {
           <Route path="/mypage/payment/cancel" element={<UserMyCancelingProgress />} />  
           <Route path="/mypage/payment/cancelconfirm" element={<UserMyCancelationConfirmationgProgress />} />  
           {/*User - Mypage - FAQ */}
-          <Route path="/mypage/FAQ" element={<UserMyFAQ />} />  
-
+          <Route path="/mypage/faq" element={<UserMyFAQ />} />  
+          {/*User - Mypage - Info */}
+          <Route path="/mypage/info" element={<UserMyInfo />} />  
+          <Route path="/mypage/info/prerequisite" element={<UserMyInfoDeletePrerequisite />} />  
+          <Route path="/mypage/info/delete" element={<UserMyInfoDelete />} />  
           {/* Redirect all other paths to /welcome */}
           <Route path="*" element={<Navigate to="/welcome" replace />} />
         </Routes>

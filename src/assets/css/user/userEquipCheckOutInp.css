@@ -1,0 +1,249 @@
+/* Container */
+.user-equip-inp {
+  position: relative;
+  width: 360px;
+  height: 800px;
+  margin: 0 auto;
+  background: #fff;
+  overflow: hidden;
+  color: #171717;
+  font-family: Pretendard, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans",
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+
+/* Header (req2: no OS bars) */
+.topbar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.back-btn {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 0;
+  padding: 6px;
+  cursor: pointer;
+  color: #000;
+}
+.page-title {
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+/* Content (req3: vertical + centered) */
+.content {
+  padding: 28px 20px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+/* Equipment card */
+.equip-card {
+  width: 320px;
+  padding: 20px 16px;
+  border-radius: 8px;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.equip-caption {
+  width: 100%;
+  font-size: 14px;
+  line-height: 14px;
+  color: #737373;
+}
+.equip-caption strong {
+  color: #171717;
+  font-weight: 600;
+  margin-right: 2px;
+}
+.equip-name {
+  width: 100%;
+  color: #ff4e49;
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+/* Fields */
+.field-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center; /* center horizontally */
+}
+.field-label {
+  align-self: flex-start;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+.input-field {
+  width: 320px;
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: #fff;
+  outline: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.input-field input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+.placeholder {
+  color: #a3a3a3;
+  font-size: 16px;
+  line-height: 24px;
+}
+.placeholder.has-value {
+  color: #404040;
+}
+.input-field.is-filled {
+  outline-color: #171717;
+}
+.calendar-ic {
+  display: inline-flex;
+  margin-left: 8px;
+}
+
+.helper {
+  width: 320px;
+  color: #a3a3a3;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* CTA */
+.cta-wrap {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+}
+.primary-btn {
+  width: 100%;
+  padding: 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #a3a3a3;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+}
+.primary-btn.enabled {
+  background: #ff4e49;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Date picker (bottom sheet) */
+.picker-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.picker-sheet {
+  width: 360px;
+  background: #fff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 28px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.month-row {
+  width: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-ic {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #404040;
+}
+.month-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #000;
+}
+
+.weekdays {
+  width: 320px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  gap: 2px;
+  color: #a3a3a3;
+  font-size: 12px;
+}
+.grid {
+  width: 320px;
+  display: grid;
+  grid-template-columns: repeat(7, 44px);
+  justify-content: center;
+  gap: 2px;
+}
+.cell {
+  width: 44px;
+  height: 44px;
+  border-radius: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+}
+.cell.blank { opacity: 0; pointer-events: none; }
+.cell.date { background: #fff; color: #171717; }
+.cell.date.disabled { color: #e5e5e5; pointer-events: none; }
+.cell.date.on { background: #ff4e49; color: #fff; }
+
+.picker-cta {
+  width: 100%;
+  margin-top: 4px;
+}
+.confirm-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  border: 0;
+  background: #fafafa;
+  color: #a3a3a3;
+  font-weight: 700;
+}
+.confirm-btn.enabled {
+  background: #ff4e49;
+  color: #fff;
+  cursor: pointer;
+}
