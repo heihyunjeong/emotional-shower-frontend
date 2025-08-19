@@ -1,0 +1,69 @@
+/* 화면 래퍼: req3 가로 중앙정렬은 usermain의 u-mobile-root/u-mobile-page로 처리 */
+.s-screen {
+  background: #fafafa;
+  display: grid;
+  justify-items: center;
+  width: 100vw;
+}
+
+/* 360x800 기준 캔버스 */
+.s-container {
+  position: relative;
+  background: #fafafa;
+  overflow: hidden;
+  /* 폭/높이는 usermain.css의 u-mobile-page가 320~480에서 관리 */
+}
+
+/* ----- 로고 도형 그룹: 고정 크기(221x46) 중앙 근처 배치 ----- */
+.s-logo-group {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  width: 221px;
+  height: 46px;
+  overflow: hidden;
+}
+
+/* 로고 파츠 (도형) */
+.s-logo-part { position: absolute; background: var(--boriniprimary-3, #EE534F); }
+.s-part1 { width: 43.61px; height: 43.45px; left: 154.28px; top: 1.45px; }
+.s-part2 { width: 46.18px; height: 46px; left: 39.92px; top: 0; opacity: 0.99; }
+.s-part3 { width: 38.49px; height: 43.45px; left: 88.65px; top: 1.27px; }
+.s-part4 { width: 19.24px; height: 43.44px; left: 131.21px; top: 1.28px; }
+.s-part5 { width: 19.24px; height: 43.44px; left: 201.76px; top: 1.28px; }
+.s-part6 { width: 39.61px; height: 44.72px; left: 0; top: 0.64px; opacity: 0.99; }
+
+.s-logo-cut { position: absolute; background: #FAFAFA; }
+.s-cut1 { width: 68.42px; height: 16.51px; left: 6.09px; top: 12.28px; }
+
+.s-logo-circle { position: absolute; background: #FAFAFA; }
+.s-circle1 { width: 15.21px; height: 15.14px; left: 15.89px; top: 25.38px; }
+.s-circle2 { width: 15.21px; height: 15.15px; left: 54.92px; top: 19.32px; }
+
+.s-logo-dot { position: absolute; background: var(--boriniprimary-3, #EE534F); }
+.s-dot1 { width: 17.06px; height: 17px; left: 14.97px; top: 24.45px; }
+.s-dot2 { width: 17.06px; height: 17px; left: 53.99px; top: 18.39px; }
+
+/* ----- 슬로건: 로고 아래 간격 두고 중앙 정렬 ----- */
+.s-text-banner {
+  position: absolute;
+  left: 50%;
+  top: calc(42% + 46px + 12px); /* 로고 높이(46px) + 간격 12px */
+  transform: translateX(-50%);
+  text-align: center;
+  color: var(--boriniprimary-3, #EE534F);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 22px;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+/* 320~480 폭에서 중앙 기준 유지(필요 시 미세 보정) */
+@media (max-width: 360px) {
+  .s-text-banner { top: calc(42% + 46px + 10px); }
+}
+@media (min-width: 421px) and (max-width: 480px) {
+  .s-text-banner { top: calc(42% + 46px + 14px); }
+}

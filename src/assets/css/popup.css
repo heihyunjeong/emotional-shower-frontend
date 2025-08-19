@@ -1,0 +1,142 @@
+/* popup.css — Bottom Sheet (pbs-) */
+/* 공통 모바일 규칙: 320~480 가변, 그 이상은 480 고정 + 흰색 좌우 여백 */
+
+:root {
+  --mobile-min: 320px;
+  --mobile-max: 480px;
+  --gutter-bg: #ffffff;      /* 480px 초과 시 좌우 여백 색 */
+  --pbs-primary: #EE534F;
+  --pbs-gray-100: #f5f5f5;
+  --pbs-gray-200: #e5e5e5;
+  --pbs-gray-400: #a3a3a3;
+  --pbs-gray-900: #171717;
+}
+
+/* 루트: 화면 전체를 덮는 레이어 */
+.pbs-root {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: auto;
+  /* 480 이상에서 보이는 좌우 여백은 실제 페이지 배경(#fff)이 보이도록 유지 */
+}
+
+/* 오버레이: 가운데 모바일 캔버스(최대 480px)만 dim 처리 */
+.pbs-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;        /* 전체 풀 블랙 아님! 가운데만 어둡게 */
+}
+
+/* 가운데 영역만 어둡게 (좌우 여백은 그대로 #fff 노출) */
+.pbs-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(var(--mobile-min), 100vw, var(--mobile-max));
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* 바텀시트 */
+.pbs-sheet {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: clamp(var(--mobile-min), 100vw, var(--mobile-max));
+  background: #fff;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
+  max-height: 80vh;               /* 내용이 길면 스크롤 */
+  overflow: auto;
+  will-change: transform, opacity;
+  animation: pbs-slide-up 220ms ease-out;
+}
+
+/* 진입 애니메이션 클래스(선택) */
+.pbs-enter { animation: pbs-slide-up 220ms ease-out; }
+@keyframes pbs-slide-up {
+  from { transform: translate(-50%, 24px); opacity: 0; }
+  to   { transform: translate(-50%, 0);     opacity: 1; }
+}
+
+/* 핸들바 */
+.pbs-handle {
+  width: 44px; height: 4px;
+  border-radius: 100px;
+  background: var(--pbs-gray-200);
+  margin: 4px auto 12px;
+}
+
+/* 이미지 영역 */
+.pbs-image {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 12px;
+}
+.pbs-image-placeholder {
+  width: 128px; height: 128px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px dashed var(--pbs-gray-200);
+  display: grid; place-items: center;
+  font-size: 12px; color: var(--pbs-gray-400);
+  text-align: center;
+}
+
+/* 텍스트 */
+.pbs-title {
+  margin-top: 4px;
+  color: var(--pbs-gray-900);
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 700;
+  text-align: center;
+}
+.pbs-subtitle {
+  margin-top: 6px;
+  color: #737373;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+}
+
+/* CTA */
+.pbs-cta-wrap {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  padding: 16px 0 calc(16px + env(safe-area-inset-bottom));
+  margin-top: 16px;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+}
+.pbs-cta {
+  width: 100%;
+  padding: 14px 16px;
+  border: 0; border-radius: 10px;
+  background: var(--pbs-primary);
+  color: #fff;
+  font-size: 16px; font-weight: 700;
+  cursor: pointer;
+}
+
+/* Zigzag 유틸 (필요 시) */
+.pbs-zigzag > * { width: 100%; }
+.pbs-zigzag > *:nth-child(odd)  { margin-left: 0;   margin-right: auto; }
+.pbs-zigzag > *:nth-child(even) { margin-left: auto; margin-right: 0; }
+
+/* 반응형: 360~480은 가변, 481+는 480 고정 + 좌우 여백(#fff) */
+@media (max-width: 360px) and (min-width: 320px) {
+  .pbs-sheet { width: 100vw; }
+}
+@media (min-width: 361px) and (max-width: 480px) {
+  .pbs-sheet { width: 100vw; }
+}
+@media (min-width: 481px) {
+  body { background: var(--gutter-bg); } /* 좌우 여백은 흰색 */
+  /* 오버레이 dim은 중앙 480px만, 시트도 480px 고정 */
+}

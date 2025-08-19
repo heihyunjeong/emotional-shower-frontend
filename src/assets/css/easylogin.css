@@ -1,107 +1,76 @@
-/* EasyLogin.css */
+/* 중앙정렬/폭 제어는 usermain.css의 u-mobile-* 유틸 사용 */
+.eL-screen { display: grid; justify-items: center; width: 100vw; background:#fff; }
+.eL-container { position:relative; background:#fff; overflow:hidden; padding: 28px 20px 24px; }
 
-.easy-login-container {
-  width: 100%;
-  height: 800px;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Pretendard', sans-serif;
+/* ── 헤더 로고 (STEP3: 로고 이미지로 교체 예정) ── */
+.eL-header { display:flex; justify-content:center; margin-bottom: 24px; }
+.eL-logo-wrap { height:32px; display:flex; align-items:center; justify-content:center; }
+
+.eL-logo-img { /* 실제 IMG가 들어올 때 사용할 규칙 */
+  width:154px; height:32px; object-fit:contain; display:block;
+}
+.eL-logo-text { /* 임시 텍스트 로고(이미지 없을 때만 노출) */
+  font-weight:800; font-size:26px; line-height:32px; color:#ee534f; font-family:inherit;
+}
+/* 이미지가 있으면 텍스트는 자동 숨김 */
+.eL-logo-img + .eL-logo-text { display:none; }
+
+/* ── 폼 ── */
+.eL-form { display:flex; flex-direction:column; align-items:center; gap:16px; }
+.eL-inputs { display:flex; flex-direction:column; gap:16px; width:100%; max-width:320px; }
+
+.eL-field { display:flex; flex-direction:column; gap:8px; position:relative; }
+.eL-label { font-size:14px; font-weight:600; line-height:18px; color:#171717; font-family:inherit; }
+
+.eL-input {
+  width:100%; padding:14px 40px 14px 12px;
+  border:1px solid #e5e5e5; border-radius:12px; background:#fff;
+  font-size:16px; line-height:24px; font-family:inherit; outline:none;
+}
+.eL-input::placeholder { color:#9ca3af; }
+.eL-input:focus { border-color:#ee534f; box-shadow:0 0 0 3px rgba(238,83,79,.1); }
+
+/* 입력 우측 아이콘(가짜 아이콘 자리) */
+.eL-input-icon {
+  position:absolute; right:12px; top:36px;
+  width:24px; height:24px; border-radius:9999px;
+  display:grid; place-items:center; border:1px solid #e5e5e5; background:#f7f7f7;
+}
+.eL-icon-eye { cursor:pointer; }
+.eL-icon-eye::after { content:"👁"; font-size:12px; opacity:.6; }
+.eL-icon-mail::after { content:"✉"; font-size:12px; opacity:.6; }
+
+/* 로그인 버튼 */
+.eL-login-btn {
+  width:100%; max-width:320px; padding:16px;
+  border:none; border-radius:8px; background:#ee534f; color:#fff;
+  font-size:16px; font-weight:700; line-height:22px; cursor:pointer;
 }
 
-.easy-login-content {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+/* 하단 링크 */
+.eL-links { display:inline-flex; align-items:center; justify-content:center; gap:16px; }
+.eL-text-btn {
+  background:transparent; border:0; padding:0; cursor:pointer;
+  font-size:14px; line-height:14px; color:#000; font-weight:500; font-family:inherit;
 }
+.eL-sep { width:1px; height:12px; background:#171717; display:inline-block; }
 
-/* 제목 */
-.easy-login-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #171717;
-  text-align: center;
-  line-height: 36px;
+/* 간편로그인 구분선 */
+.eL-divider {
+  display:flex; align-items:center; gap:12px; justify-content:center;
+  margin:24px auto 16px; width:100%; max-width:360px;
 }
+.eL-divider-line { flex:1 1 auto; height:1px; background:#e5e5e5; }
+.eL-divider-text { font-size:12px; color:#a3a3a3; font-weight:500; line-height:12px; font-family:inherit; }
 
-.easy-login-sub {
-  font-size: 14px;
-  font-weight: 500;
-  color: #737373;
-  text-align: center;
-  line-height: 24px;
+/* 소셜 아이콘 (STEP3 스타일) */
+.eL-socials { display:flex; justify-content:center; gap:16px; }
+.eL-social {
+  width:44px; height:44px; border-radius:9999px;
+  display:grid; place-items:center; font-size:16px; font-weight:700;
+  border:1px solid transparent; cursor:pointer; font-family:inherit;
 }
-
-/* 버튼 공통 */
-.easy-login-button {
-  width: 100%;
-  height: 56px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  gap: 12px;
-  cursor: pointer;
-}
-
-/* 각 버튼 색상 */
-.kakao {
-  background-color: #fee500;
-}
-
-.naver {
-  background-color: #28d111;
-}
-
-.google {
-  background-color: transparent;
-  border: 1px solid #e1e1e1;
-}
-
-.apple {
-  background-color: #171717;
-}
-
-/* 아이콘 (임시 사각형 자리 표시용) */
-.easy-login-icon {
-  width: 22px;
-  height: 22px;
-  background-color: white;
-  border-radius: 4px;
-}
-
-/* 아이콘 구글/애플 특수처리 (선택적 커스터마이징 가능) */
-.google-icon {
-  background: linear-gradient(45deg, #fbc02d, #e53935, #4caf50, #1565c0);
-}
-
-.apple-icon {
-  background-color: white;
-}
-
-/* 텍스트 공통 */
-.easy-login-text {
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 22px;
-}
-
-/* 텍스트 색상 */
-.kakao-text {
-  color: #171717;
-}
-
-.naver-text {
-  color: white;
-}
-
-.google-text {
-  color: #171717;
-}
-
-.apple-text {
-  color: white;
-}
+.eL-kakao  { background:#fee500; color:#392020; }
+.eL-naver  { background:#03c75a; color:#fff; }
+.eL-google { background:#fff; color:#000; border-color:#e5e5e5; }
+.eL-apple  { background:#000; color:#fff; }

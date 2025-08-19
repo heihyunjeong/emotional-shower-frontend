@@ -1,38 +1,97 @@
-import React, { useState } from 'react';
-import '../assets/css/easylogin.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function EasyLogin() {
+import "../assets/css/all.css";
+import "../assets/css/user/usermain.css";
+import "../assets/css/easylogin.css";
+
+function EasyLogin() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [pw, setPw] = useState("");
+  const [showPw, setShowPw] = useState(false);
+
+  const goHome = (e) => {
+    e?.preventDefault();
+    navigate("/home");
+  };
+
+  const goTerms = () => navigate("/terms");
+
   return (
-    <div className="easy-login-container">
-      <div className="easy-login-content">
-        {/* Title */}
-        <div className="easy-login-title">장비 걱정은 이제 그만!</div>
-        <div className="easy-login-sub">지금 바로, 스마트한 보관 생활 보린이에서 시작해보세요!</div>
+    <div className="u-mobile-root eL-screen" role="region" aria-label="Easy Login">
+      <div className="u-mobile-page eL-container">
+        <header className="eL-header">
+          <div className="eL-logo-wrap">
+            {/* 이미지가 생기면 이 줄만 추가해주세요
+              import logo from "../../assets/img/logo/borini.svg";
+              <img className="eL-logo-img" src={logo} alt="BORINI" />
+            */}
+            <span className="eL-logo-text">BORINI</span>
+          </div>
+        </header>
 
-        {/* 카카오 로그인 */}
-        <div className="easy-login-button kakao">
-          <div className="easy-login-icon" />
-          <div className="easy-login-text kakao-text">카카오로 시작하기</div>
+        {/* 메일 로그인 */}
+        <form className="eL-form" onSubmit={goHome}>
+          <div className="eL-inputs">
+            <label className="eL-field">
+              <span className="eL-label">메일 주소</span>
+              <input
+                type="email"
+                className="eL-input"
+                placeholder="메일주소 입력"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <span aria-hidden="true" className="eL-input-icon eL-icon-mail" />
+            </label>
+
+            <label className="eL-field">
+              <span className="eL-label">비밀번호</span>
+              <input
+                type={showPw ? "text" : "password"}
+                className="eL-input"
+                placeholder="비밀번호 입력"
+                value={pw}
+                onChange={(e) => setPw(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className="eL-input-icon eL-icon-eye"
+                aria-label={showPw ? "비밀번호 숨기기" : "비밀번호 보기"}
+                onClick={() => setShowPw((v) => !v)}
+              />
+            </label>
+          </div>
+
+          <button type="submit" className="eL-login-btn">로그인</button>
+
+          <div className="eL-links">
+            <button type="button" className="eL-text-btn">비밀번호 찾기</button>
+            <span className="eL-sep" aria-hidden="true" />
+            <button type="button" className="eL-text-btn" onClick={goTerms}>회원가입</button>
+          </div>
+        </form>
+
+        {/* 구분선 + 간편로그인 */}
+        <div className="eL-divider">
+          <span className="eL-divider-line" />
+          <span className="eL-divider-text">간편로그건</span>
+          <span className="eL-divider-line" />
         </div>
 
-        {/* 네이버 로그인 */}
-        <div className="easy-login-button naver">
-          <div className="easy-login-icon" />
-          <div className="easy-login-text naver-text">네이버로 시작하기</div>
-        </div>
-
-        {/* 구글 로그인 */}
-        <div className="easy-login-button google">
-          <div className="easy-login-icon google-icon" />
-          <div className="easy-login-text google-text">구글로 시작하기</div>
-        </div>
-
-        {/* 애플 로그인 */}
-        <div className="easy-login-button apple">
-          <div className="easy-login-icon apple-icon" />
-          <div className="easy-login-text apple-text">Apple ID로 시작하기</div>
+        {/* 간편로그인 아이콘 - 실제 연동 전까지 /home 으로 이동 */}
+        <div className="eL-socials" role="group" aria-label="간편로그인">
+          <button className="eL-social eL-kakao" aria-label="카카오로 로그인" onClick={goHome}>K</button>
+          <button className="eL-social eL-naver" aria-label="네이버로 로그인" onClick={goHome}>N</button>
+          <button className="eL-social eL-google" aria-label="구글로 로그인" onClick={goHome}>G</button>
+          <button className="eL-social eL-apple" aria-label="애플로 로그인" onClick={goHome}></button>
         </div>
       </div>
     </div>
   );
 }
+
+export default EasyLogin;

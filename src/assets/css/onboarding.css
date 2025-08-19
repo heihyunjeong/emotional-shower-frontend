@@ -1,121 +1,119 @@
-.onboarding-container {
-    width: 360px;
-    height: 800px;
-    position: relative;
-    background: #FAFAFA;
-    overflow: hidden;
-    font-family: 'Pretendard', sans-serif;
-  }
-  
-  /* ✅ Centered Horizontally */
-  .image-placeholder {
-    width: 240px;
-    height: 240px;
-    position: absolute;
-    top: 148px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .image-label {
-    font-weight: 700;
-    font-size: 18px;
-    text-align: center;
-    color: black;
-    line-height: 24px;
-    padding: 0;
-  }
-  
-  .text-group {
-    position: absolute;
-    top: 428px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    text-align: center;
-  }
-  
-  .main-title {
-    font-size: 28px;
-    font-weight: 800;
-    line-height: 36px;
-    color: #171717;
-    word-break: keep-all;
-  }
-  
-  .sub-title {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    color: #737373;
-    word-break: keep-all;
-  }
-  
-  .indicator {
-    position: absolute;
-    top: 678px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 9px;
-  }
-  
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 9999px;
-    background: #E5E5E5;
-  }
-  
-  .dot.active {
-    background: #171717;
-  }
-  
-  .button-wrapper {
-    position: absolute;
-    top: 710px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    width: 320px;
-  }
-  
-  .start-button {
-    background-color: #EE534F;
-    border-radius: 8px;
-    padding: 16px;
-    width: 100%;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .start-button-text {
-    width: 128px;
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 22px;
-    text-align: center;
-  }
-  
-  .bottom-bar {
-    width: 139px;
-    height: 5px;
-    position: absolute;
-    top: 767px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: black;
-    border-radius: 100px;
-  }
-  
+/* req3: 중앙정렬은 u-mobile-root/u-mobile-page가 담당 */
+.o-screen {
+  display: grid;
+  justify-items: center;
+  width: 100vw;
+  background: #fafafa;
+}
+
+.o-container {
+  position: relative;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+/* IMG placeholder */
+.o-image {
+  width: 240px;
+  height: 240px;
+  position: absolute;
+  top: 148px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  border: 1px solid #e5e5e5;    /* 레퍼런스 느낌의 라인 */
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.o-image-label {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  color: #000;
+  text-align: center;
+  font-family: inherit;
+}
+
+/* Text */
+.o-text {
+  position: absolute;
+  top: 428px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+.o-title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 36px;
+  color: #171717;
+  word-break: keep-all;
+  white-space: pre-line;  /* \n 라인브레이크 반영 */
+  font-family: inherit;
+}
+.o-subtitle {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #737373;
+  word-break: keep-all;
+  white-space: pre-line;  /* \n 라인브레이크 반영 */
+  font-family: inherit;
+}
+
+/* Pagination */
+.o-indicator {
+  position: absolute;
+  top: 678px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 9px;
+}
+.o-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #e5e5e5;
+}
+.o-dot.o-active {
+  background: #171717;
+}
+
+/* CTA */
+.o-button-wrap {
+  position: absolute;
+  top: 710px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  width: 320px;
+}
+.o-start-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ee534f;
+  cursor: pointer;
+}
+.o-start-btn-text {
+  display: inline-block;
+  width: 128px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  text-align: center;
+  font-family: inherit;
+}
+
+/* req2: 상단 StatusBar/하단 HomeIndicator는 포함하지 않음 */

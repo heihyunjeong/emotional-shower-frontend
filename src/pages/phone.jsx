@@ -1,68 +1,139 @@
-import React, { useState } from 'react';
-import '../assets/css/phone.css';
+// src/pages/phone.jsx
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function IdentityVerification({ onBack, onNext }) {
-  const [phone, setPhone] = useState('');
-  const [showDone, setShowDone] = useState(false);
+/* 전역 → 공통 → 페이지 순으로 import (우선순위) */
+import "../assets/css/all.css";
+import "../assets/css/user/usermain.css";
+import "../assets/css/phone.css";   // p- 접두사
+import "../assets/css/popup.css";   // pbs- 접두사 (바텀시트)
 
-  const isValid = phone.trim().length > 0;
+export default function Phone() {
+  const [phone, setPhone] = useState("");
+  const [showSheet, setShowSheet] = useState(false);
+  const navigate = useNavigate();
+  const pageRef = useRef(null);
+
+  // (선택) 이름 노출: 이전 단계에서 sessionStorage.setItem("join_name", name) 해두면 사용됨
+  const userName = (typeof window !== "undefined" && sessionStorage.getItem("join_name")) || "고객";
+
+  // 숫자만 입력 + 간단 유효성(국내 10~11자리)
+  const onlyDigits = (v) => v.replace(/\D/g, "");
+  const digits = onlyDigits(phone);
+  const isValid = digits.length >= 10 && digits.length <= 11;
 
   const handleNext = () => {
-    onNext(phone);
-    setShowDone(true);
-    setTimeout(() => setShowDone(false), 2000);
+    if (!isValid) return;
+    setShowSheet(true);
   };
 
+  const handleCloseSheet = () => {
+    setShowSheet(false);
+    navigate("/easylogin");
+  };
+
+  // 모바일 키보드 대응: 하단 버튼이 가려지지 않도록 오프셋 반영
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv || !pageRef.current) return;
+
+    const updateKbOffset = () => {
+      const hidden = Math.max(0, window.innerHeight - (vv.height + vv.offsetTop));
+      pageRef.current.style.setProperty("--kb-offset", `${Math.round(hidden)}px`);
+    };
+
+    vv.addEventListener("resize", updateKbOffset);
+    vv.addEventListener("scroll", updateKbOffset);
+    updateKbOffset();
+
+    return () => {
+      vv.removeEventListener("resize", updateKbOffset);
+      vv.removeEventListener("scroll", updateKbOffset);
+      pageRef.current?.style.removeProperty("--kb-offset");
+    };
+  }, []);
+
+  // 팝업 열릴 때 스크롤 잠금
+  useEffect(() => {
+    if (showSheet) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [showSheet]);
+
   return (
-    <div className="identity-container">
-      {/* 헤더: 진행바 */}
-      <header className="header">
-        <div className="progress-bar">
-          <div className="progress" />
-        </div>
-      </header>
+    <div className="app-container">
+      <div className="u-mobile-root">
+        <div ref={pageRef} className="u-mobile-page p-page" role="region" aria-label="Phone Verification">
+          {/* 헤더 & 진행바 */}
+          <header className="p-header">
+            <button className="p-back" onClick={() => navigate(-1)} aria-label="뒤로가기">‹</button>
+            <div className="p-progress">
+              <span className="p-progress-bg" />
+              {/* 예: 전체 5단계 중 4단계라면 80% 등으로 조절 */}
+              <span className="p-progress-bar" style={{ width: "80%" }} />
+            </div>
+          </header>
 
-      {/* 안내 문구 */}
-      <h1 className="step-title">
-        연락 가능한 휴대폰 번호를<br />
-        입력해주세요
-      </h1>
+          {/* 타이틀 */}
+          <h1 className="p-title">
+            연락 가능한 휴대폰 번호를<br />입력해주세요
+          </h1>
 
-      {/* 휴대폰 입력 폼 */}
-      <div className="form-group">
-        <label className="form-label" htmlFor="phone-input">
-          휴대폰 번호
-        </label>
-        <div className="input-box">
-          <input
-            id="phone-input"
-            type="tel"
-            className="phone-input"
-            value={phone}
-            onChange={e => setPhone(e.target.value)}
-            placeholder="휴대폰 번호 입력"
-            autoComplete="tel"
-          />
+          {/* 입력 폼 */}
+          <div className="p-form">
+            <label className="p-label" htmlFor="phone-input">휴대폰 번호</label>
+            <div className="p-inputbox">
+              <input
+                id="phone-input"
+                type="tel"
+                inputMode="numeric"
+                className="p-input"
+                value={phone}
+                onChange={(e) => setPhone(onlyDigits(e.target.value))}
+                placeholder="01012345678"
+                autoComplete="tel"
+              />
+            </div>
+            <p className="p-help">
+              해당 연락처는 보관 신청 시 수거를 위한 용도로만 사용되며, 다른 목적으로는 절대 이용되지 않습니다.
+            </p>
+          </div>
+
+          {/* 하단 고정 CTA (키보드 대응) */}
+          <div className="p-button-bar u-safe-bottom">
+            <button
+              type="button"
+              className={`p-button ${!isValid ? "is-disabled" : "is-active"}`}
+              onClick={handleNext}
+              disabled={!isValid}
+              aria-disabled={!isValid}
+            >
+              확인
+            </button>
+          </div>
+
+          {/* 바텀시트 팝업 */}
+          {showSheet && (
+            <div className="pbs-root" role="dialog" aria-modal="true" aria-labelledby="pbs-title">
+              <div className="pbs-overlay" onClick={handleCloseSheet} />
+              <div className="pbs-sheet pbs-enter">
+                <div className="pbs-handle" />
+                <div className="pbs-image">
+                  <div className="pbs-image-placeholder">IMG<br />128×128</div>
+                </div>
+                <h2 id="pbs-title" className="pbs-title">환영합니다, {userName}님!</h2>
+                <p className="pbs-subtitle">편하게 맡기고, 가볍게 즐겨보세요.</p>
+                <div className="pbs-cta-wrap u-safe-bottom">
+                  <button className="pbs-cta" onClick={handleCloseSheet}>좋아요!</button>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
-
-      {/* 폼 바로 아래 안내 메시지 */}
-      <div data-layer="여기에 메시지 입력" className="contact-info">
-        해당 연락처는 보관 신청 시 수거를 위한 용도로만 사용되며, 다른 목적으로는 절대 이용되지 않습니다.
-      </div>
-
-      {/* 다음 버튼 */}
-      <button
-        type="button"
-        className="next-btn"
-        onClick={handleNext}
-        disabled={!isValid}
-      >
-        다음
-      </button>
-
-      {/* Done 팝업 */}
-      {showDone && <div className="done-popup">Done</div>}
     </div>
   );
 }

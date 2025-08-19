@@ -1,0 +1,136 @@
+/* =========================================================
+   usermain.css (BORINI)
+   - Mobile viewport rules + Utilities
+   - Clean, full-screen responsive layout
+   ========================================================= */
+
+/* ---------- Root variables ---------- */
+:root {
+  /* Brand / color */
+  --boriniprimary-3: #EE534F;
+
+  /* Mobile viewport rules */
+  --mobile-min: 320px;
+  --mobile-base: 360px;
+  --mobile-max: 480px;
+  --page-height-base: 800px;
+  --mobile-gutter-bg: #ffffff; /* White gutters */
+}
+
+/* Prevent shrinking below 320; white gutters beyond 480 */
+html, body {
+  min-width: var(--mobile-min);
+  background: var(--mobile-gutter-bg);
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- Mobile layout utilities (req3) ---------- */
+/* Page stack root: vertical flow + horizontal center */
+.u-mobile-root {
+  display: grid;
+  justify-items: center;     /* horizontal center */
+  align-content: start;      /* vertical flow from top */
+  width: 100vw;
+  min-height: 100dvh;
+  background: var(--mobile-gutter-bg);
+}
+
+/* Mobile page canvas */
+.u-mobile-page {
+  width: clamp(var(--mobile-min), 100vw, var(--mobile-max));
+  min-width: var(--mobile-min);
+  max-width: var(--mobile-max);
+  min-height: var(--page-height-base);
+  margin: 0 auto;
+  position: relative;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* 320~360: fill width */
+@media (max-width: 360px) and (min-width: 320px) {
+  .u-mobile-page { width: 100vw; }
+}
+
+/* 361~480: responsive fill */
+@media (min-width: 361px) and (max-width: 480px) {
+  .u-mobile-page { width: 100vw; }
+}
+
+/* 480+: fixed 480 centered with white side gutters */
+@media (min-width: 481px) {
+  .u-mobile-page {
+    width: var(--mobile-max);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Exact 360x800 (use only when hard spec required) */
+.u-size-360x800 {
+  width: 360px !important;
+  height: 800px !important;
+}
+
+/* Zigzag helper (optional) */
+.u-zigzag > * { width: 100%; }
+.u-zigzag > *:nth-child(odd)  { margin-left: 0;   margin-right: auto; }
+.u-zigzag > *:nth-child(even) { margin-left: auto; margin-right: 0; }
+
+/* A11y helpers */
+.u-visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; border: 0; padding: 0;
+  clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden;
+}
+
+/* Safe-area padding for sticky footers / bottom bars */
+.u-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+:root {
+  /* 기존 usermain.css 변수와 함께 사용 */
+  --mobile-width: 390px;   /* iPhone 13 기준(필요 시 480px로 변경) */
+  --mobile-height: 844px;
+
+  /* Global colors */
+  --color-primary: #000000;
+  --color-secondary: #555555;
+  --color-background: #FFFFFF;
+  --color-gray-light: #CCCCCC;
+  --color-gray-medium: #666666;
+}
+
+/* ==== [ADD] Global box-model & body text baseline ==== */
+* {
+  box-sizing: border-box;
+}
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  line-height: 1.5;
+}
+
+/* ==== [ADD] App-level centering container (style.css의 .app-container 대체) ==== */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 100%;
+  min-height: 100vh;
+
+  /* 폭 제한은 여기서만! body에는 X */
+  max-width: var(--mobile-width);
+  margin: 0 auto;
+
+  background-color: var(--color-background);
+}

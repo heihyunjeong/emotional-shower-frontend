@@ -47,7 +47,7 @@ export default function UserEquipStored() {
             </button>
 
             <button className="btn ghost">
-              <span className="btn-icon box" />
+              <span className="btn-icon board" />
               <span className="btn-text">
                 <strong>장비 꺼내기</strong>
                 <small>스노보드, 휘닉스파크</small>

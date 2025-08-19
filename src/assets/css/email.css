@@ -1,0 +1,149 @@
+/* 이메일 단계 전용 (충돌 방지용 e- 접두사) */
+
+:root {
+  --e-primary: #EE534F;
+  --e-gray-50: #fafafa;
+  --e-gray-100: #f5f5f5;
+  --e-gray-200: #e5e5e5;
+  --e-gray-400: #a3a3a3;
+  --e-gray-900: #171717;
+}
+
+/* 페이지 스코프 */
+.e-scope {
+  min-height: 100%;
+  padding: 0 20px 24px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 헤더 */
+.e-header {
+  position: relative;
+  padding-top: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--e-gray-100);
+  margin-bottom: 16px;
+}
+
+.e-back {
+  position: absolute;
+  left: 0;
+  top: 24px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 0;
+  color: var(--e-primary);
+  font-size: 22px;
+  line-height: 32px;
+  cursor: pointer;
+}
+
+/* 진행바 */
+.e-progress {
+  position: relative;
+  height: 4px;
+  margin-top: 24px;
+}
+
+.e-progress-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--e-gray-100);
+  border-radius: 2px;
+}
+
+.e-progress-bar {
+  position: absolute;
+  left: 0; top: 0;
+  height: 4px;
+  background: var(--e-primary);
+  border-radius: 0 18px 18px 0;
+}
+
+/* 타이틀 */
+.e-title {
+  margin: 20px 0 24px;
+  color: var(--e-gray-900);
+  font-size: 24px;
+  line-height: 29px;
+  font-weight: 700;
+}
+
+/* 폼 */
+.e-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.e-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--e-gray-900);
+}
+
+.e-inputbox {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--e-gray-200);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.e-input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  font-size: 16px;
+  color: var(--e-gray-900);
+}
+
+.e-input::placeholder {
+  color: var(--e-gray-400);
+}
+
+/* 하단 버튼 바(키보드/세이프에어리어 대응) */
+.e-button-bar {
+  position: sticky;
+  bottom: 0;
+  left: 0; right: 0;
+  background: #fff;
+  padding: 16px 0; /* 좌우 패딩은 상위 .e-scope가 갖고 있음 */
+  margin-top: auto;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+}
+
+.e-safe-bottom {
+  /* usermain.css에서도 쓰는 네이밍을 재활용 */
+  padding-bottom: calc(env(safe-area-inset-bottom));
+}
+
+/* CTA 버튼 */
+.e-button {
+  width: 100%;
+  max-width: 320px;
+  display: block;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--e-gray-200);
+  cursor: not-allowed;
+}
+
+.e-button.is-active {
+  background: var(--e-primary);
+  cursor: pointer;
+}
+
+/* 반응형(축소시 약간의 타이포 다운스케일) */
+@media (max-width: 360px) {
+  .e-title { font-size: 22px; line-height: 27px; }
+}

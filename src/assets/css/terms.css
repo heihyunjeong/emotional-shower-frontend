@@ -1,127 +1,60 @@
-/* container & header */
-.terms-container {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    min-height: 100vh;
-    background: var(--color-background);
-  }
-  
-  .terms-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .back-btn {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-  }
-  
-  .progress-bar {
-    flex: 1;
-    height: 4px;
-    background: #eee;
-    border-radius: 2px;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-  }
-  
-  .progress {
-    width: 25%;
-    height: 100%;
-    background: #ff3b30;
-    border-radius: 2px;
-  }
-  
-  /* title */
-  .terms-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-  
-  /* term list */
-  .term-list {
-    flex: 1;
-  }
-  
-  .term-item {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.75rem;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .term-item:hover {
-    background: #f9f9f9;
-  }
-  
-  .checkbox {
-    width: 20px;
-    height: 20px;
-    border: 1px solid var(--color-gray-light);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 0.75rem;
-    font-size: 0.8rem;
-    color: #fff;
-    flex-shrink: 0;
-  }
-  
-  .checkbox.checked {
-    background: #ff3b30;
-    border-color: #ff3b30;
-  }
-  
-  .term-label {
-    flex: 1;
-    font-size: 1rem;
-    color: var(--color-primary);
-  }
-  
-  .arrow {
-    font-size: 1.2rem;
-    color: var(--color-gray-medium);
-  }
-  
-  /* next button */
-  .next-btn {
-    width: 100%;
-    padding: 1rem;
-    margin-top: auto;
-    font-size: 1rem;
-    font-weight: 500;
-    border: none;
-    border-radius: 8px;
-    background: var(--color-gray-light);
-    color: var(--color-background);
-    cursor: not-allowed;
-    transition: background 0.2s ease-in-out;
-  }
-  
-  .next-btn:enabled {
-    background: #ff3b30;
-    cursor: pointer;
-  }
-  
-  /* responsive */
-  @media (max-width: 400px) {
-    .terms-title {
-      font-size: 1.1rem;
-    }
-    .term-item {
-      padding: 0.6rem 0.8rem;
-    }
-    .next-btn {
-      padding: 0.8rem;
-    }
-  }
-  
+:root {
+  --t-primary: var(--boriniprimary-3, #EE534F);
+  --t-gray-50:#fafafa; --t-gray-100:#f5f5f5; --t-gray-200:#e5e5e5;
+  --t-gray-300:#d4d4d4; --t-gray-400:#a3a3a3; --t-gray-500:#737373;
+  --t-gray-900:#171717;
+}
+
+/* full screen wrapper (req3는 u-mobile-*에서 처리) */
+.t-screen { display:grid; justify-items:center; width:100vw; min-height:100dvh; background:#fff; }
+.t-container { position:relative; background:#fff; overflow:hidden; padding:0 20px 24px; }
+
+/* header */
+.t-header{ position:relative; padding-top:24px; padding-bottom:12px; border-bottom:1px solid var(--t-gray-100); margin-bottom:16px; }
+.t-back{ position:absolute; left:0; top:24px; width:32px; height:32px; background:transparent; border:0; color:var(--t-primary); font-size:22px; line-height:32px; cursor:pointer; }
+.t-title{ margin:0; text-align:left; color:var(--t-gray-900); font-weight:700; font-size:24px; line-height:29px; font-family:inherit; }
+
+/* progress */
+.t-progress{ position:relative; height:4px; margin:12px 0 16px; }
+.t-progress-bg{ position:absolute; inset:0; background:var(--t-gray-100); border-radius:2px; }
+.t-progress-bar{ position:absolute; left:0; top:0; height:4px; background:var(--t-primary); border-radius:0 18px 18px 0; }
+
+/* all agree chip */
+.t-all{
+  width:100%; display:flex; align-items:center; justify-content:space-between;
+  padding:12px; margin:8px 0 14px;
+  background:#fff; border:1px solid var(--t-gray-200); border-radius:10px; cursor:pointer;
+}
+.t-all-text{ color:var(--t-gray-900); font-size:16px; line-height:24px; font-weight:600; font-family:inherit; }
+
+/* list */
+.t-list{ display:flex; flex-direction:column; gap:10px; }
+.t-row{ display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--t-gray-100); }
+
+/* left label */
+.t-label{ display:flex; align-items:center; gap:8px; background:transparent; border:0; padding:0; cursor:pointer; text-align:left; }
+.t-badge{ font-size:14px; line-height:24px; font-weight:600; font-family:inherit; }
+.t-required{ color:var(--t-primary); }
+.t-optional{ color:var(--t-gray-400); }
+.t-label-text{ color:var(--t-gray-900); font-size:16px; line-height:24px; font-weight:500; }
+.t-chevron{ color:#bdbdbd; margin-left:6px; }
+
+/* right check */
+.t-check{
+  width:24px; height:24px; border-radius:9999px; border:1px solid var(--t-gray-300);
+  background:#fff; position:relative;
+}
+.t-round.t-checked{ background:var(--t-primary); border-color:var(--t-primary); }
+.t-round.t-checked::after{
+  content:""; position:absolute; left:50%; top:50%;
+  transform:translate(-50%,-55%) rotate(45deg);
+  width:6px; height:12px; border-right:2px solid #fff; border-bottom:2px solid #fff;
+}
+
+/* CTA */
+.t-cta-wrap{ position:sticky; bottom:0; background:#fff; padding:16px 0 calc(16px + env(safe-area-inset-bottom)); width:100%; box-shadow:0 -2px 8px rgba(0,0,0,.05); }
+.t-cta{ width:100%; padding:16px; border:0; border-radius:8px; font-size:16px; font-weight:700; color:#fff; background:var(--t-gray-200); cursor:not-allowed; }
+.t-cta:enabled{ background:var(--t-primary); cursor:pointer; }
+
+/* responsive */
+@media (max-width:360px){ .t-title{ font-size:22px; line-height:27px; } }
