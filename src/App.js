@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 
-
 import Splash from "./pages/splash";
 // pre-login
 import Onboarding from "./pages/onboarding";
