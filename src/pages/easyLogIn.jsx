@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// Import Firebase Authentication functions
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-// Import the auth object from your firebase.js configuration file
-import { auth } from "../firebase"; // Adjust the path as needed
 
+// Firebase imports
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import app from '../firebase';  // ✅ src/firebase.js에서 export한 app
+import app from '../firebase'; // Firebase 앱 인스턴스
 
+// CSS
 import "../assets/css/all.css";
 import "../assets/css/user/usermain.css";
 import "../assets/css/easylogin.css";
 
 function EasyLogin() {
-
-  const auth = getAuth(app);
+  const auth = getAuth(app); // Firebase Auth 인스턴스
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -27,7 +25,7 @@ function EasyLogin() {
 
   const goTerms = () => navigate("/terms");
 
-  // Function to handle Google login
+  // Google 로그인 처리
   const handleGoogleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -39,7 +37,7 @@ function EasyLogin() {
     }
   };
 
-  // Function for temporary social login (for demo purposes)
+  // 임시 소셜 로그인 (심사용)
   const handleSocialLogin = (provider) => {
     console.log(`${provider} 로그인 시도 (심사용 임시 구현)`);
     navigate("/home");
@@ -54,7 +52,7 @@ function EasyLogin() {
           </div>
         </header>
 
-        {/* Email login form */}
+        {/* 이메일 로그인 폼 */}
         <form className="eL-form" onSubmit={goHome}>
           <div className="eL-inputs">
             <label className="eL-field">
@@ -98,14 +96,14 @@ function EasyLogin() {
           </div>
         </form>
 
-        {/* Divider and social login */}
+        {/* 구분선 및 간편로그인 */}
         <div className="eL-divider">
           <span className="eL-divider-line" />
           <span className="eL-divider-text">간편로그인</span>
           <span className="eL-divider-line" />
         </div>
 
-        {/* Social login buttons */}
+        {/* 소셜 로그인 버튼 */}
         <div className="eL-socials" role="group" aria-label="간편로그인">
           <button
             className="eL-social eL-kakao"
