@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+// Import Firebase Authentication functions
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+// Import the auth object from your firebase.js configuration file
+import { auth } from "../firebase"; // Adjust the path as needed
 
 import "../assets/css/all.css";
 import "../assets/css/user/usermain.css";
@@ -18,20 +22,34 @@ function EasyLogin() {
 
   const goTerms = () => navigate("/terms");
 
+  // Function to handle Google login
+  const handleGoogleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      navigate("/home");
+    } catch (error) {
+      console.error("Google login failed:", error);
+      alert("구글 로그인에 실패했습니다. 다시 시도해 주세요.");
+    }
+  };
+
+  // Function for temporary social login (for demo purposes)
+  const handleSocialLogin = (provider) => {
+    console.log(`${provider} 로그인 시도 (심사용 임시 구현)`);
+    navigate("/home");
+  };
+
   return (
     <div className="u-mobile-root eL-screen" role="region" aria-label="Easy Login">
       <div className="u-mobile-page eL-container">
         <header className="eL-header">
           <div className="eL-logo-wrap">
-            {/* 이미지가 생기면 이 줄만 추가해주세요
-              import logo from "../../assets/img/logo/borini.svg";
-              <img className="eL-logo-img" src={logo} alt="BORINI" />
-            */}
             <span className="eL-logo-text">BORINI</span>
           </div>
         </header>
 
-        {/* 메일 로그인 */}
+        {/* Email login form */}
         <form className="eL-form" onSubmit={goHome}>
           <div className="eL-inputs">
             <label className="eL-field">
@@ -75,19 +93,43 @@ function EasyLogin() {
           </div>
         </form>
 
-        {/* 구분선 + 간편로그인 */}
+        {/* Divider and social login */}
         <div className="eL-divider">
           <span className="eL-divider-line" />
-          <span className="eL-divider-text">간편로그건</span>
+          <span className="eL-divider-text">간편로그인</span>
           <span className="eL-divider-line" />
         </div>
 
-        {/* 간편로그인 아이콘 - 실제 연동 전까지 /home 으로 이동 */}
+        {/* Social login buttons */}
         <div className="eL-socials" role="group" aria-label="간편로그인">
-          <button className="eL-social eL-kakao" aria-label="카카오로 로그인" onClick={goHome}>K</button>
-          <button className="eL-social eL-naver" aria-label="네이버로 로그인" onClick={goHome}>N</button>
-          <button className="eL-social eL-google" aria-label="구글로 로그인" onClick={goHome}>G</button>
-          <button className="eL-social eL-apple" aria-label="애플로 로그인" onClick={goHome}></button>
+          <button
+            className="eL-social eL-kakao"
+            aria-label="카카오로 로그인"
+            onClick={() => handleSocialLogin('kakao')}
+          >
+            K
+          </button>
+          <button
+            className="eL-social eL-naver"
+            aria-label="네이버로 로그인"
+            onClick={() => handleSocialLogin('naver')}
+          >
+            N
+          </button>
+          <button
+            className="eL-social eL-google"
+            aria-label="구글로 로그인"
+            onClick={handleGoogleLogin}
+          >
+            G
+          </button>
+          <button
+            className="eL-social eL-apple"
+            aria-label="애플로 로그인"
+            onClick={() => handleSocialLogin('apple')}
+          >
+            
+          </button>
         </div>
       </div>
     </div>
