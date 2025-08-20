@@ -5,11 +5,16 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 // Import the auth object from your firebase.js configuration file
 import { auth } from "../firebase"; // Adjust the path as needed
 
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import app from '../firebase';  // ✅ src/firebase.js에서 export한 app
+
 import "../assets/css/all.css";
 import "../assets/css/user/usermain.css";
 import "../assets/css/easylogin.css";
 
 function EasyLogin() {
+
+  const auth = getAuth(app);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
