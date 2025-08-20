@@ -95,7 +95,7 @@ function App() {
           <Route path="/mypage/info/prerequisite" element={<UserMyInfoDeletePrerequisite />} />  
           <Route path="/mypage/info/delete" element={<UserMyInfoDelete />} />  
           {/* Redirect all other paths to /welcome */}
-          <Route path="*" element={<Navigate to="/welcome" replace />} />
+          <Route path="*" element={<Navigate to="/splash" replace />} />
         </Routes>
       </BrowserRouter>
     </div>
