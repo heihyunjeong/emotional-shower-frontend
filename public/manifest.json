@@ -3,19 +3,20 @@
   "name": "BORINI User Registration",
   "icons": [
     {
-      "src": "/logo192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "/images/icon-128.png",
+      "type": "image/png",
+      "sizes": "128x128"
     },
     {
-      "src": "/logo512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "/images/icon-160.png",
+      "type": "image/png",
+      "sizes": "160x160"
     }
   ],
-  "start_url": "/",
-  "background_color": "#ffffff",
+  "start_url": "/splash",
   "display": "standalone",
+  "background_color": "#ffffff",
   "theme_color": "#EE534F",
-  "description": "BORINI user registration and terms agreement"
+  "description": "BORINI user registration and terms agreement",
+  "orientation": "portrait"
 }

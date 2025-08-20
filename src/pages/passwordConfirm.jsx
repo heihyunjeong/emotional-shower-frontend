@@ -11,6 +11,7 @@ export default function PasswordConfirm() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const pageRef = useRef(null);
+  
 
   // 이전 단계에서 전달된 비밀번호(state) 또는 sessionStorage에서 읽기
   const originalPw =
