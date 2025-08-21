@@ -6,9 +6,11 @@ import "../../assets/css/components/uiCommon.css";
 // 페이지 전용 CSS
 import "../../assets/css/user/userLocSel.css";
 
+//컴포넌트
 import TopAreaSubPage from "../components/TopAreaSubPage";
 import ProgressBar from "../components/ProgressBar";
 import PageTitle from "../components/PageTitle";
+import PrimaryButton from "../components/PrimaryButton";
 
 import backBut from "../../assets/img/backBut.png";
 import xBut from "../../assets/img/xBut.png";
@@ -52,16 +54,14 @@ export default function UserLocationSelect() {
         </button>
       </div>
 
-      {/* CTA */}
-      <button
-        type="button"
-        className={`location-cta ${selected ? "active" : ""}`}
+      {/* CTA - PrimaryButton 컴포넌트로 변경 */}
+      <PrimaryButton
         onClick={goNext}
         disabled={!selected}
-        aria-disabled={!selected}
+        active={!!selected}
       >
         다음
-      </button>
+      </PrimaryButton>
     </div>
   );
 }

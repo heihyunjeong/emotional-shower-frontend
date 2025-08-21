@@ -52,3 +52,34 @@
   font: 700 24px/29px 'Pretendard', system-ui, -apple-system, sans-serif;
   color: #171717; text-align: left;
 }
+
+.primary-button {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  padding: 16px;
+  background: #ff4e49;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+  text-align: center;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.primary-button.active {
+  background: #ff4e49;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 6px 16px rgba(255, 78, 73, 0.25);
+}
+
+.primary-button:disabled,
+.primary-button[aria-disabled="true"] {
+  opacity: .5;
+  cursor: default;
+}
