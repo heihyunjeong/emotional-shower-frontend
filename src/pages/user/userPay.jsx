@@ -34,14 +34,23 @@ export default function UserPayment() {
 
   const handleSelect = (id) => setSelected(id);
 
-  const handlePay = () => {
-    if (!selected) return;
-    // TODO: 실제 결제 로직 연결
-    navigate("/storing/paymentcomplete");
-  };
+
 
   const goBack = () => navigate(-1);
   const goHome = () => navigate("/home");
+
+const handlePay = () => {
+  if (!selected) return;
+
+  if (selected === "tosspay") {
+    // 토스페이 선택 시, 토스 결제 페이지로 이동
+    window.location.href = "https://borini.app/payment";
+  } else {
+    // 그 외 결제 수단은 내부 페이지로 이동
+    navigate("/storing/paymentcomplete");
+  }
+};
+
 
   return (
     <div className="payment-container">
@@ -64,7 +73,7 @@ export default function UserPayment() {
                 className={`grid-item ${span} ${isSelected ? "selected" : ""}`}
                 onClick={() => handleSelect(m.id)}
                 aria-pressed={isSelected}
-              >
+              > 
                 {m.type === "img" && m.src ? (
                   <img className="pay-logo" src={m.src} alt={m.label} />
                 ) : (

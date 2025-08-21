@@ -1,12 +1,21 @@
-// src/pages/phone.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-/* 전역 → 공통 → 페이지 순으로 import (우선순위) */
+/* Global → Page CSS */
 import "../assets/css/all.css";
 import "../assets/css/user/usermain.css";
-import "../assets/css/phone.css";   // p- 접두사
+import "../assets/css/phone.css";   // p- 접두사(본문 스타일만 사용)
 import "../assets/css/popup.css";   // pbs- 접두사 (바텀시트)
+
+/* Shared UI */
+import TopAreaSubPage from "./components/TopAreaSubPage";
+import ProgressBar from "./components/ProgressBar";
+import PageTitle from "./components/PageTitle";
+import PrimaryButton from "./components/PrimaryButton";
+
+/* Icons */
+import backBut from "../assets/img/backBut.png";
+import xBut from "../assets/img/xBut.png";
 
 export default function Phone() {
   const [phone, setPhone] = useState("");
@@ -14,10 +23,10 @@ export default function Phone() {
   const navigate = useNavigate();
   const pageRef = useRef(null);
 
-  // (선택) 이름 노출: 이전 단계에서 sessionStorage.setItem("join_name", name) 해두면 사용됨
-  const userName = (typeof window !== "undefined" && sessionStorage.getItem("join_name")) || "고객";
+  // (선택) 이전 단계에서 저장된 이름 표기
+  const userName =
+    (typeof window !== "undefined" && sessionStorage.getItem("join_name")) || "고객";
 
-  // 숫자만 입력 + 간단 유효성(국내 10~11자리)
   const onlyDigits = (v) => v.replace(/\D/g, "");
   const digits = onlyDigits(phone);
   const isValid = digits.length >= 10 && digits.length <= 11;
@@ -26,26 +35,22 @@ export default function Phone() {
     if (!isValid) return;
     setShowSheet(true);
   };
-
   const handleCloseSheet = () => {
     setShowSheet(false);
     navigate("/easylogin");
   };
 
-  // 모바일 키보드 대응: 하단 버튼이 가려지지 않도록 오프셋 반영
+  // 모바일 키보드 대응
   useEffect(() => {
     const vv = window.visualViewport;
     if (!vv || !pageRef.current) return;
-
     const updateKbOffset = () => {
       const hidden = Math.max(0, window.innerHeight - (vv.height + vv.offsetTop));
       pageRef.current.style.setProperty("--kb-offset", `${Math.round(hidden)}px`);
     };
-
     vv.addEventListener("resize", updateKbOffset);
     vv.addEventListener("scroll", updateKbOffset);
     updateKbOffset();
-
     return () => {
       vv.removeEventListener("resize", updateKbOffset);
       vv.removeEventListener("scroll", updateKbOffset);
@@ -53,36 +58,45 @@ export default function Phone() {
     };
   }, []);
 
-  // 팝업 열릴 때 스크롤 잠금
+  // 팝업 시 스크롤 잠금
   useEffect(() => {
-    if (showSheet) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => { document.body.style.overflow = prev; };
-    }
+    if (!showSheet) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
   }, [showSheet]);
 
+  const goBack = () => navigate(-1);
+  const goHome = () => navigate("/easylogin");
+
   return (
-    <div className="app-container">
+    <div className="app-container" ref={pageRef}>
       <div className="u-mobile-root">
-        <div ref={pageRef} className="u-mobile-page p-page" role="region" aria-label="Phone Verification">
-          {/* 헤더 & 진행바 */}
-          <header className="p-header">
-            <button className="p-back" onClick={() => navigate(-1)} aria-label="뒤로가기">‹</button>
-            <div className="p-progress">
-              <span className="p-progress-bg" />
-              {/* 예: 전체 5단계 중 4단계라면 80% 등으로 조절 */}
-              <span className="p-progress-bar" style={{ width: "80%" }} />
-            </div>
-          </header>
-
+        <div className="u-mobile-page" style={{ position: "relative" }}>
+          {/* 상단 공용 영역 */}
+          <TopAreaSubPage onBack={goBack} onClose={goHome} backIcon={backBut} closeIcon={xBut} />
+          {/* 진행바 (예: 80%) */}
+          <ProgressBar width="100%" />
           {/* 타이틀 */}
-          <h1 className="p-title">
-            연락 가능한 휴대폰 번호를<br />입력해주세요
-          </h1>
+          <PageTitle>
+            연락 가능한 휴대폰 번호를
+            <br />
+            입력해주세요
+          </PageTitle>
 
-          {/* 입력 폼 */}
-          <div className="p-form">
+          {/* 본문: PageTitle 아래로 */}
+          <div
+            className="p-form"
+            style={{
+              position: "absolute",
+              top: 220,
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "100%",
+              padding: "0 20px",
+              boxSizing: "border-box",
+            }}
+          >
             <label className="p-label" htmlFor="phone-input">휴대폰 번호</label>
             <div className="p-inputbox">
               <input
@@ -101,17 +115,21 @@ export default function Phone() {
             </p>
           </div>
 
-          {/* 하단 고정 CTA (키보드 대응) */}
-          <div className="p-button-bar u-safe-bottom">
-            <button
-              type="button"
-              className={`p-button ${!isValid ? "is-disabled" : "is-active"}`}
+          {/* 하단 고정 CTA (safe-area + kb offset) */}
+          <div
+            className="fixed-cta"
+            style={{
+              paddingBottom:
+                "calc(16px + env(safe-area-inset-bottom) + var(--kb-offset, 0px))",
+            }}
+          >
+            <PrimaryButton
               onClick={handleNext}
               disabled={!isValid}
-              aria-disabled={!isValid}
+              active={isValid}
             >
               확인
-            </button>
+            </PrimaryButton>
           </div>
 
           {/* 바텀시트 팝업 */}
@@ -121,17 +139,16 @@ export default function Phone() {
               <div className="pbs-sheet pbs-enter">
                 <div className="pbs-handle" />
                 <div className="pbs-image">
-                  <div className="pbs-image-placeholder">IMG<br />128×128</div>
+                  <div className="pbs-image-placeholder">IMG<br/>128×128</div>
                 </div>
                 <h2 id="pbs-title" className="pbs-title">환영합니다, {userName}님!</h2>
-                <p className="pbs-subtitle">편하게 맡기고, 가볍게 즐겨보세요.</p>
+                <p className="pbs-subtitle">이제부터 장비는 저희가 안전하게 보관해드립니다.</p>
                 <div className="pbs-cta-wrap u-safe-bottom">
                   <button className="pbs-cta" onClick={handleCloseSheet}>좋아요!</button>
                 </div>
               </div>
             </div>
           )}
-
         </div>
       </div>
     </div>
