@@ -2,6 +2,11 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 
+//toss api
+import PaymentPage from './pages/Payment';
+import Success from './pages/Success';
+import Fail from './pages/Fail';
+
 import Splash from "./pages/splash";
 // pre-login
 import Onboarding from "./pages/onboarding";
@@ -96,6 +101,11 @@ function App() {
           <Route path="/mypage/info/delete" element={<UserMyInfoDelete />} />  
           {/* Redirect all other paths to /welcome */}
           <Route path="*" element={<Navigate to="/splash" replace />} />
+          {/* toss api */}
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/fail" element={<Fail />} />
+
         </Routes>
       </BrowserRouter>
     </div>

@@ -3,14 +3,14 @@
   "name": "BORINI User Registration",
   "icons": [
     {
-      "src": "/images/icon-128.png",
+      "src": "/images/icon-192.png",
       "type": "image/png",
-      "sizes": "128x128"
+      "sizes": "192x192"
     },
     {
-      "src": "/images/icon-160.png",
+      "src": "/images/icon-512.png",
       "type": "image/png",
-      "sizes": "160x160"
+      "sizes": "512x512"
     }
   ],
   "start_url": "/splash",
