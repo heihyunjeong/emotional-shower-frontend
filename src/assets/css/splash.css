@@ -15,7 +15,7 @@
 }
 
 /* ----- 로고 도형 그룹: 고정 크기(221x46) 중앙 근처 배치 ----- */
-.s-logo-group {
+.s-logo {
   position: absolute;
   left: 50%;
   top: 42%;

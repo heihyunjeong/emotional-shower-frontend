@@ -1,24 +1,33 @@
+// Onboarding.jsx
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../assets/css/user/usermain.css";
 import "../assets/css/onboarding.css";
 
+import on_1 from "../assets/img/on_1.png";
+import on_2 from "../assets/img/on_2.png";
+import on_3 from "../assets/img/on_3.png";
+
 const slides = [
   {
     id: 1,
-    title: "집에 방치 말고,\n전문가한테 맡기세요",
-    description: "장비를 안전하게,\n전문가 손으로 제대로 보관해요.",
+    title: "집에 방치된 장비,\n전문가한테 맡기세요",
+    description: "소중한 장비를 안전하게,\n체계적으로 관리해드립니다.",
+    slideImage: on_1,
   },
   {
     id: 2,
     title: "장비 상태,\n직접 확인하세요",
-    description: "장비 리포트로 안전 상태부터\n수명가이드까지 다 알려드려요.",
+    description: "점검 리포트로 안전 지수부터\n수명가이드까지 다 알려드려요.",
+    slideImage: on_2,
   },
   {
     id: 3,
-    title: "시즌 시작!\n몸만 오세요",
+    title: "시즌 준비 끝!\n몸만 오세요",
     description: "무거운 장비 없이 떠나는 여정,\n사람도 장비도 편하게 쉬고 만나요.",
+    slideImage: on_3,
   },
 ];
 
@@ -27,31 +36,34 @@ function Onboarding() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    if (currentSlide < slides.length - 1) setCurrentSlide((v) => v + 1);
-    else navigate("/easylogin");
+    if (currentSlide < slides.length - 1) {
+      setCurrentSlide((v) => v + 1);
+    } else {
+      navigate("/easylogin");
+    }
   };
 
-  const { title, description } = slides[currentSlide];
+  const { title, description, slideImage } = slides[currentSlide];
 
   return (
     <div className="u-mobile-root o-screen" role="region" aria-label="Onboarding">
       <div className="u-mobile-page o-container">
-        {/* IMG placeholder (240x240 @ top:148) */}
+        {/* 이미지 영역: 현재 슬라이드의 이미지를 250x250px로 표시 */}
         <div className="o-image" aria-hidden="true">
-          <div className="o-image-label">
-            IMG영역
-            <br />
-            240*240
-          </div>
+          <img 
+            src={slideImage} 
+            alt={`Onboarding step ${currentSlide + 1}`} 
+            className="o-slide-image"
+          />
         </div>
 
-        {/* Text block with fixed line breaks from slides */}
+        {/* 텍스트 블록 */}
         <div className="o-text">
           <h1 className="o-title">{title}</h1>
           <p className="o-subtitle">{description}</p>
         </div>
 
-        {/* Pagination */}
+        {/* 페이지네이션 */}
         <div className="o-indicator" role="tablist" aria-label="Onboarding progress">
           {[0, 1, 2].map((i) => (
             <div
@@ -63,7 +75,7 @@ function Onboarding() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* CTA 버튼 */}
         <div className="o-button-wrap">
           <button onClick={handleNext} className="o-start-btn">
             <span className="o-start-btn-text">시작하기</span>
