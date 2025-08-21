@@ -1,127 +1,155 @@
-/* container & header */
 .terms-container {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    min-height: 100vh;
-    background: var(--color-background);
-  }
-  
-  .terms-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .back-btn {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-  }
-  
-  .progress-bar {
-    flex: 1;
-    height: 4px;
-    background: #eee;
-    border-radius: 2px;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-  }
-  
-  .progress {
-    width: 25%;
-    height: 100%;
-    background: #ff3b30;
-    border-radius: 2px;
-  }
-  
-  /* title */
-  .terms-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-  
-  /* term list */
-  .term-list {
-    flex: 1;
-  }
-  
-  .term-item {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.75rem;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .term-item:hover {
-    background: #f9f9f9;
-  }
-  
-  .checkbox {
-    width: 20px;
-    height: 20px;
-    border: 1px solid var(--color-gray-light);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 0.75rem;
-    font-size: 0.8rem;
-    color: #fff;
-    flex-shrink: 0;
-  }
-  
-  .checkbox.checked {
-    background: #ff3b30;
-    border-color: #ff3b30;
-  }
-  
-  .term-label {
-    flex: 1;
-    font-size: 1rem;
-    color: var(--color-primary);
-  }
-  
-  .arrow {
-    font-size: 1.2rem;
-    color: var(--color-gray-medium);
-  }
-  
-  /* next button */
-  .next-btn {
-    width: 100%;
-    padding: 1rem;
-    margin-top: auto;
-    font-size: 1rem;
-    font-weight: 500;
-    border: none;
-    border-radius: 8px;
-    background: var(--color-gray-light);
-    color: var(--color-background);
-    cursor: not-allowed;
-    transition: background 0.2s ease-in-out;
-  }
-  
-  .next-btn:enabled {
-    background: #ff3b30;
-    cursor: pointer;
-  }
-  
-  /* responsive */
-  @media (max-width: 400px) {
-    .terms-title {
-      font-size: 1.1rem;
-    }
-    .term-item {
-      padding: 0.6rem 0.8rem;
-    }
-    .next-btn {
-      padding: 0.8rem;
-    }
-  }
-  
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  height: 800px; /* 필요시 100vh */
+  margin: 0 auto;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* PageTitle 아래에서 시작 */
+.frame {
+  position: absolute;
+  top: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 0 20px;
+}
+
+.frame .view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.frame .wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-height: calc(800px - 220px - (88px + env(safe-area-inset-bottom)));
+  overflow-y: auto;
+}
+
+/* 항목 행 */
+.frame .element {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  width: 100%;
+  border-bottom: 1px solid #f2f2f2;
+  cursor: pointer;
+}
+
+/* 전체 동의 강조 */
+.frame .element--all {
+  background: #fff7f7;
+  padding: 14px 12px;
+  border-radius: 12px;
+  border: 1px solid #ffe1df;
+}
+
+/* 좌측 텍스트 그룹 */
+.frame .div {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.frame .text {
+  color: transparent; /* 내부 span이 색상 제어 */
+  font-family: var(--body-3-16px-font-family, "Pretendard");
+  font-size: var(--body-3-16px-font-size, 16px);
+  font-weight: var(--body-3-16px-font-weight, 500);
+  line-height: var(--body-3-16px-line-height, 24px);
+  margin-top: -1px;
+  white-space: nowrap;
+}
+
+.frame .span { color: #ff4d49; font: inherit; }
+.frame .text-wrapper-2 { color: #171717; font: inherit; }
+
+/* 가운데 표시용 화살표 */
+.frame .icon-arrow-right { height: 18px; width: 18px; }
+.frame .vector { display: inline-block; font-size: 16px; line-height: 18px; color: #a3a3a3; }
+
+/* 우측 체크박스 (24px) */
+.frame .check-24-instance {
+  width: 24px; height: 24px;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 6px;
+  background: #fff;
+  position: relative;
+  flex: 0 0 auto;
+}
+.frame .check-24-instance.checked {
+  background: #ff4e49;
+  border-color: #ff4e49;
+}
+.frame .check-24-instance.checked::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 48%;
+  width: 12px; height: 7px;
+  border-left: 2px solid #fff; border-bottom: 2px solid #fff;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* 하단 고정 CTA */
+.fixed-cta {
+  position: fixed;
+  left: 50%; transform: translateX(-50%);
+  bottom: 0;
+  width: 100%; max-width: 360px;
+  padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
+  background: #fff;
+  box-shadow: 0 -8px 16px rgba(0,0,0,.06);
+  z-index: 1000;
+}
+.fixed-cta > * { width: 100%; }
+
+/* 모달 (외부열기 안내) */
+.terms-modal { position: fixed; inset: 0; z-index: 2000; }
+.terms-modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.4); }
+.terms-modal__panel {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 360px); height: min(84vh, 640px);
+  background: #fff; border-radius: 14px;
+  overflow: hidden; display: flex; flex-direction: column;
+}
+.terms-modal__header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; padding: 12px 14px; border-bottom: 1px solid #f2f2f2;
+}
+.terms-modal__title { font: 700 16px/24px "Pretendard", system-ui, -apple-system, sans-serif; color: #171717; }
+.terms-modal__close {
+  appearance: none; border: 0; background: transparent;
+  font-size: 18px; line-height: 1; padding: 6px; border-radius: 8px; cursor: pointer;
+}
+.terms-modal__body { flex: 1; background: #fff; }
+.embed-fallback {
+  height: 100%; padding: 20px 16px; display: flex;
+  flex-direction: column; justify-content: center; gap: 16px; text-align: center;
+}
+.embed-fallback__text { color: #666; font: 500 13px/20px "Pretendard", system-ui, -apple-system, sans-serif; }
+.embed-fallback__actions { display: flex; justify-content: center; gap: 10px; }
+.terms-modal__footer {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 8px; padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+  border-top: 1px solid #f2f2f2;
+}
+.external-open { color: #ff4e49; font: 600 13px/20px "Pretendard", system-ui, -apple-system, sans-serif; text-decoration: none; }
+.close-inline {
+  appearance: none; border: 0; background: #f5f5f5; color: #171717;
+  font: 600 13px/20px "Pretendard", system-ui, -apple-system, sans-serif;
+  padding: 8px 12px; border-radius: 8px; cursor: pointer;
+}
+
+/* 큰 화면 대응 */
+@media (min-width: 481px) { .terms-container { max-width: 480px; } }
+@media (min-height: 900px) { .terms-container { height: 100vh; } }

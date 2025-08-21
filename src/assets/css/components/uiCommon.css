@@ -53,12 +53,10 @@
   color: #171717; text-align: left;
 }
 
+/* 버튼 자체는 absolute 제거: 공용 버튼 스타일만 유지 */
 .primary-button {
-  position: absolute;
-  bottom: 120px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 40px);
+  display: block;
+  width: 100%;
   padding: 16px;
   background: #ff4e49;
   color: #fff;
@@ -70,16 +68,43 @@
   border: none;
   cursor: pointer;
 }
-
 .primary-button.active {
-  background: #ff4e49;
-  color: #ffffff;
-  border: none;
   box-shadow: 0 6px 16px rgba(255, 78, 73, 0.25);
 }
-
 .primary-button:disabled,
 .primary-button[aria-disabled="true"] {
   opacity: .5;
   cursor: default;
+}
+
+/* ✅ 화면 하단 고정 푸터 */
+.fixed-cta {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 100%;
+  max-width: 360px;                /* 페이지 최대폭에 맞춤 */
+  padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
+  z-index: 1000;
+}
+
+/* 본문이 가려지지 않도록 여유 공간 확보 */
+.confirmation-content {
+  padding: 32px 20px 120px;        /* ⬅️ 하단 여백(푸터 높이만큼) */
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex: 1;
+}
+
+/* 컨테이너는 플렉스 레이아웃 유지 */
+.confirmation-container {
+  width: 100%;
+  max-width: 360px;
+  min-height: 800px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }

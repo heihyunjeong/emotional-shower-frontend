@@ -1,7 +1,19 @@
-// userStorInf.jsx
+// src/pages/user/userStorInf.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// 공용 CSS (TopAreaSubPage / ProgressBar / PageTitle 공통 스타일)
+import "../../assets/css/components/uiCommon.css";
+// 페이지 전용 CSS (기존)
 import '../../assets/css/user/userStorInf.css';
+
+import TopAreaSubPage from "../components/TopAreaSubPage";
+import ProgressBar from "../components/ProgressBar";
+import PageTitle from "../components/PageTitle";
+import PrimaryButton from "../components/PrimaryButton";
+
+import backBut from "../../assets/img/backBut.png";
+import xBut from "../../assets/img/xBut.png";
 
 export default function UserStorInf() {
   const navigate = useNavigate();
@@ -15,24 +27,32 @@ export default function UserStorInf() {
   });
 
   const handleConfirm = () => {
-    // 예: 결제 완료 페이지로 이동
-    navigate('/completion');
+    navigate('/storing/terms');
   };
+
+  // 뒤로가기/닫기 동작 (필요 시 경로 고정 가능: 예) navigate("/storing/planselection"))
+  const goBack = () => navigate(-1);
+  const goHome = () => navigate("/home");
 
   return (
     <div className="confirmation-container">
-      {/* Progress Bar */}
-      <div className="progress-bar">
-        <div className="progress-bg" />
-        <div className="progress-fill" />
-      </div>
+      {/* 상단(뒤로/닫기) */}
+      <TopAreaSubPage
+        onBack={goBack}
+        onClose={goHome}
+        backIcon={backBut}
+        closeIcon={xBut}
+      />
 
-      {/* Title */}
-      <div className="section-title">
-        신청 내용을 한 번 더<br/>확인해볼게요
-      </div>
+      {/* 진행바: 원하는 폭으로 지정 (예: 240px) */}
+      <ProgressBar width="240px" />
 
-      {/* Confirmation Form */}
+      {/* 타이틀 */}
+      <PageTitle>
+        신청 내용을 한 번 더<br />확인해볼게요
+      </PageTitle>
+
+      {/* 확인 폼 */}
       <div className="confirmation-form">
         <div className="form-item">
           <span className="label">이름</span>
@@ -64,7 +84,7 @@ export default function UserStorInf() {
         </div>
       </div>
 
-      {/* Disclaimer */}
+      {/* 안내 문구 */}
       <div className="disclaimer">
         장비 수거는 신청 완료 후 영업일 기준 1~2일 내 운영팀이 개별 연락을 드려 일정 조율 후 진행됩니다.<br/>
         이 서비스는 1년 단위로 자동 연장되며, 연장 3일 전까지는 언제든지 연장 취소가 가능합니다.<br/>
@@ -72,10 +92,12 @@ export default function UserStorInf() {
         수거 3일 전에는 취소 및 전액 환불이 가능하며, 수거 이후에는 취소 불가합니다.
       </div>
 
-      {/* Confirm Button */}
-      <button className="cta-button" onClick={handleConfirm}>
-        확인
-      </button>
+      {/* 확인 버튼 */}
+      <div className="fixed-cta">
+        <PrimaryButton onClick={handleConfirm} active>
+          확인
+        </PrimaryButton>
+      </div>
     </div>
   );
 }

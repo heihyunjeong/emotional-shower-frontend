@@ -22,6 +22,7 @@ export default function UserEquipmentSelect() {
   const [selected, setSelected] = useState(null); // 'snowboard' | 'ski' | null
   const navigate = useNavigate();
 
+  const goBack = () => navigate("/storing/equipmentselection");
   const goHome = () => navigate("/home");
   const goNext = () => {
     if (!selected) return;
@@ -77,13 +78,15 @@ export default function UserEquipmentSelect() {
       </div>
 
       {/* CTA */}
-      <PrimaryButton
-        onClick={goNext}
-        disabled={!selected}
-        active={!!selected}
-      >
-        다음
-      </PrimaryButton>
+      <div className="fixed-cta">
+        <PrimaryButton
+          onClick={goNext}
+          disabled={!selected}
+          active={!!selected}
+        >
+          다음
+        </PrimaryButton>
+      </div>
     </div>
   );
 }

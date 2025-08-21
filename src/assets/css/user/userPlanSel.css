@@ -53,10 +53,10 @@
   width: calc(100% - 40px);
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 8px; /* Anima는 카드 사이 여백 8px */
 }
 
-/* Plan Card Shared */
+/* Plan Card (Anima 기반 공통) */
 .plan-card {
   border-radius: 16px;
   padding: 20px;
@@ -65,16 +65,19 @@
   gap: 32px;
 }
 
+/* Header (이름/가격/단위) */
 .plan-header {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px; /* Anima: 12px */
+  align-items: center; /* 중앙정렬 */
 }
 
 .plan-name {
   font-size: 16px;
   font-weight: 600;
   line-height: 16px;
+  letter-spacing: -0.25px;
   font-family: 'Pretendard';
   text-align: center;
 }
@@ -82,79 +85,114 @@
 .plan-price {
   font-size: 24px;
   font-weight: 700;
-  font-family: 'Pretendard';
   line-height: 24px;
+  letter-spacing: -0.25px;
+  font-family: 'Pretendard';
   text-align: center;
 }
 
 .plan-unit {
   font-size: 12px;
   font-weight: 400;
+  letter-spacing: -0.25px;
   font-family: 'Pretendard';
-  color: #a3a3a3;
   line-height: 12px;
   text-align: center;
 }
 
+/* Benefits */
 .plan-benefits {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 2px; /* Anima: 2px */
 }
 
 .benefit {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px; /* Anima: 4px */
   font-size: 14px;
   font-weight: 500;
+  letter-spacing: -0.25px;
   font-family: 'Pretendard';
   line-height: 21px;
 }
 
+/* 체크 점(Anima는 아이콘이었지만 시각 동일하게) */
 .dot {
-  width: 14px;
-  height: 14px;
+  width: 16px;      /* Anima: 16px */
+  height: 16px;     /* Anima: 16px */
   border-radius: 9999px;
   display: inline-block;
   position: relative;
 }
 
+/* 기본 카드 컬러셋 */
+.plan-card.basic {
+  background: #ffffff;
+  border: 1px solid #e5e5e5; /* Anima: grayscale-200 */
+}
+
+.plan-card.basic .plan-name,
+.plan-card.basic .plan-price {
+  color: #171717; /* grayscale-900 */
+}
+
+.plan-card.basic .plan-unit {
+  color: #a3a3a3; /* grayscale-400 */
+}
+
+.plan-card.basic .benefit {
+  color: #525252; /* grayscale-600 */
+}
+
 .dot.primary {
   background: #ff4e49;
-  border: 1.5px solid white;
+  border: 1.5px solid #ffffff; /* stroke white */
+}
+
+/* 자유 카드 컬러셋 */
+.plan-card.free {
+  background: linear-gradient(180deg, #ff4e49 0%, #fd211b 100%);
+  border: none;
+}
+
+.plan-card.free .plan-name,
+.plan-card.free .plan-price,
+.plan-card.free .plan-unit,
+.plan-card.free .benefit {
+  color: #ffffff; /* Anima: all white */
 }
 
 .dot.white {
-  background: white;
-  border: 1.5px solid #ff4e49;
+  background: #ffffff;
+  border: 1.5px solid #ff4e49; /* stroke primary */
 }
 
+/* Buttons (Anima 스타일) */
 .plan-button {
   padding: 12px 16px;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
-  font-family: 'Pretendard Variable';
+  font-family: 'Pretendard Variable', 'Pretendard', system-ui, -apple-system, sans-serif;
   text-align: center;
+  line-height: 24px;
+  cursor: pointer;
+  user-select: none;
 }
 
-.plan-button.filled {
-  background: #ff4e49;
-  color: white;
+.plan-card.basic .plan-button.filled {
+  background: #ff4e49;  /* borini primary-3 */
+  color: #ffffff;
 }
 
-.plan-button.white {
-  background: white;
+.plan-card.free .plan-button.white {
+  background: #ffffff;
   color: #ff4e49;
 }
 
-/* Backgrounds */
-.plan-card.basic {
-  background: white;
-  border: 1px solid #e5e5e5;
-}
-
-.plan-card.free {
-  background: linear-gradient(180deg, #ff4e49 0%, #fd211b 100%);
+/* (선택) 상호작용 피드백 */
+.plan-button:active {
+  transform: translateY(1px);
 }

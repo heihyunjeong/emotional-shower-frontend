@@ -55,13 +55,15 @@ export default function UserLocationSelect() {
       </div>
 
       {/* CTA - PrimaryButton 컴포넌트로 변경 */}
-      <PrimaryButton
-        onClick={goNext}
-        disabled={!selected}
-        active={!!selected}
-      >
-        다음
-      </PrimaryButton>
+      <div className="fixed-cta">
+        <PrimaryButton
+          onClick={goNext}
+          disabled={!selected}
+          active={!!selected}
+        >
+          다음
+        </PrimaryButton>
+      </div>
     </div>
   );
 }
