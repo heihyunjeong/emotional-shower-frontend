@@ -1,126 +1,111 @@
-/* userPayment.css */
-
-/* 전체 컨테이너 */
+/* 컨테이너 */
 .payment-container {
+  position: relative;
   width: 100%;
   max-width: 360px;
-  height: 800px;
+  height: 800px; /* 필요 시 100vh */
   margin: 0 auto;
-  position: relative;
-  background: white;
+  background: #fff;
   overflow: hidden;
 }
 
-/* Progress Bar */
-.progress-bar {
+/* PageTitle 아래에서 시작 */
+.frame {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 20px;
   position: absolute;
-  top: 104px;
-  left: 0;
-  width: 100%;
-  height: 4px;
-}
-.progress-bg {
-  width: 100%;
-  height: 4px;
-  background: #f5f5f5;
-}
-.progress-fill {
-  width: 100%;
-  height: 4px;
-  background: #ff4e49;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-/* Frame */
-.payment-frame {
-  position: absolute;
-  top: 108px;
+  top: 220px;              /* PageTitle 아래 */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  padding: 0 20px;
   box-sizing: border-box;
 }
 
-/* Section Title */
-.section-title {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 29px;
-  font-family: 'Pretendard', sans-serif;
-  color: #171717;
-  text-align: center;
-  margin: 0;
-  white-space: pre-line;
-}
-
-/* Methods Grid */
-.payment-methods {
-  margin-top: 56px;
-  display: flex;
-  flex-wrap: wrap;
+/* 2열 그리드: 11 / 11 / 2 */
+.methods-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
-  justify-content: space-between;
+  width: 100%;
+
+  /* 하단 고정 CTA 피해서 스크롤 확보 */
+  max-height: calc(800px - 220px - (88px + env(safe-area-inset-bottom)));
+  overflow-y: auto;
 }
 
-/* Each Method Card */
-.method-card {
-  flex: 1 0 48%;
-  height: 72px;
+/* 공통 카드 스타일 */
+.grid-item {
+  appearance: none;
+  border: 1px solid #e5e5e5;
+  background: #fff;
   border-radius: 8px;
-  outline: 1px solid #e5e5e5;
-  display: flex;
+  height: 72px;
+  width: 100%;
+  padding: 0 12px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: outline 0.2s;
-}
-.method-card.selected {
-  outline: 1.5px solid #525252;
-  outline-offset: -1.5px;
+  transition: border-color .2s ease, box-shadow .2s ease;
 }
 
-/* Placeholder logos */
-.method-logo {
-  width: auto;
+/* 선택 상태 */
+.grid-item.selected {
+  border-color: #525252;
+  box-shadow: 0 0 0 1px #525252 inset;
+}
+
+@media (hover:hover) {
+  .grid-item:hover { border-color: #d4d4d4; }
+  .grid-item.selected:hover { border-color: #3f3f3f; box-shadow: 0 0 0 1px #3f3f3f inset; }
+}
+
+/* 마지막 줄 full width (2칸 span) */
+.grid-item.span-2 {
+  grid-column: 1 / -1;
+}
+
+/* 로고 크기 통일 */
+.pay-logo {
   height: 24px;
+  width: auto;
+  display: block;
+  object-fit: contain;
 }
-/* 예시 배경색으로 구분 */
-.method-logo.npay      { background: #00DE5A; width: 70px; }
-.method-logo.kakaopay  { background: #FFE000; width: 62px; }
-.method-logo.tosspay   { background: #434343; width: 104px; }
-.method-logo.payco     { background: #FF2233; width: 72px; }
-.method-logo.virtual   { color: #525252; font-size: 16px; }
-.method-logo.mobile    { color: #525252; font-size: 16px; }
-.method-logo.card      { color: #525252; font-size: 16px; }
 
-/* CTA 버튼 */
-.cta-button {
-  position: absolute;
-  top: 712px;
+/* 텍스트 카드 */
+.pay-text {
+  color: #525252;
+  font: 500 16px/24px "Pretendard", system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.25px;
+  white-space: nowrap;
+}
+
+/* 하단 고정 CTA */
+.fixed-cta {
+  position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 40px);
-  padding: 16px;
-  background: #fafafa;
-  color: #a3a3a3;
-  font-size: 16px;
-  font-weight: 700;
-  font-family: 'Pretendard', sans-serif;
-  text-align: center;
-  border: none;
-  border-radius: 8px;
-  cursor: not-allowed;
-  transition: background 0.2s, color 0.2s;
+  bottom: 0;
+  width: 100%;
+  max-width: 360px;
+  padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
+  background: #fff;
+  box-shadow: 0 -8px 16px rgba(0,0,0,.06);
+  z-index: 1000;
 }
-.cta-button.active {
-  background: #ff4e49;
-  color: white;
-  cursor: pointer;
+.fixed-cta > * { width: 100%; }
+
+/* 큰 화면 대응 */
+@media (min-width: 481px) {
+  .payment-container { max-width: 480px; }
+}
+@media (min-height: 900px) {
+  .payment-container { height: 100vh; }
+  .methods-grid {
+    max-height: calc(100vh - 220px - (88px + env(safe-area-inset-bottom)));
+  }
 }

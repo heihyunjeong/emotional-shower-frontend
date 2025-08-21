@@ -22,7 +22,7 @@ export default function UserEquipmentSelect() {
   const [selected, setSelected] = useState(null); // 'snowboard' | 'ski' | null
   const navigate = useNavigate();
 
-  const goBack = () => navigate("/storing/equipmentselection");
+  const goBack = () => navigate("/home");
   const goHome = () => navigate("/home");
   const goNext = () => {
     if (!selected) return;

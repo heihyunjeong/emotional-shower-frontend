@@ -67,7 +67,7 @@ export default function TermsAgreement() {
     <div className="terms-container">
       {/* 상단 공용 영역 */}
       <TopAreaSubPage onBack={goBack} onClose={goHome} backIcon={backBut} closeIcon={xBut} />
-      <ProgressBar width="180px" />
+      <ProgressBar width="300px" />
       <PageTitle>약관을 확인하고<br/>동의해주세요</PageTitle>
 
       {/* 리스트 영역 (Anima 구조 반영) */}

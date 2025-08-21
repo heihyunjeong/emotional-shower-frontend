@@ -1,9 +1,20 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../assets/css/user/userPayComp.css';
+import PrimaryButton from "../components/PrimaryButton";
+
+import payComp from "../../assets/img/payCom.png";
 
 export default function UserPaymentComplete() {
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    // 내부 라우팅
+    navigate("/home");
+
+    // 외부 링크 새 창에서 열기
+    window.open("http://pf.kakao.com/_Vfxbwn/friend", "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div className="payment-complete-container">
@@ -11,7 +22,7 @@ export default function UserPaymentComplete() {
       <div className="complete-frame">
         <div className="complete-img">
           <div className="img-placeholder">
-            IMG영역<br/>200*200
+             <img src={payComp} alt="완료" />
           </div>
         </div>
         <div className="complete-text">
@@ -23,13 +34,12 @@ export default function UserPaymentComplete() {
         </div>
       </div>
 
-      {/* Back Home Button */}
-      <button
-        className="cta-button"
-        onClick={() => navigate('/')}
-      >
-        홈으로 돌아가기
-      </button>
+      {/* PrimaryButton */}
+      <div className="fixed-cta">
+        <PrimaryButton onClick={handleClick}>
+          카톡으로 일정잡기
+        </PrimaryButton>
+      </div>
     </div>
   );
 }
