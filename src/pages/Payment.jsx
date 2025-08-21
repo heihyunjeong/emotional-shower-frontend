@@ -2,35 +2,43 @@
 import { useEffect } from 'react';
 
 function PaymentPage() {
-  useEffect(() => {
-    // 토스 결제 위젯 스크립트 로드
-    const script = document.createElement('script');
-    script.src = 'https://js.tosspayments.com/v1/payment-widget';
-    script.async = true;
-    document.body.appendChild(script);
+useEffect(() => {
+  const script = document.createElement('script');
+  script.src = 'https://js.tosspayments.com/v1/payment-widget';
+  script.async = true;
 
-    script.onload = () => {
-      // 본인의 클라이언트 키로 교체하세요 (예: 'test_ck_...')
-      const paymentWidget = window.TossPayments('test_ck_GePWvyJnrKJn1WYnNPKqVgLzN97E');
+  script.onload = () => {
+    // 1. TossPayments 함수가 존재하는지 확인
+    console.log('window.TossPayments 존재 여부:', typeof window.TossPayments);
 
-      // 결제 수단 렌더링 (가격은 예시)
+    // 2. 클라이언트 키로 paymentWidget 생성
+    const paymentWidget = window.TossPayments('test_ck_GePWvyJnrKJn1WYnNPKqVgLzN97E');
+    console.log('paymentWidget 객체:', paymentWidget);
+
+    // 3. renderPaymentMethods 메서드가 존재하는지 확인
+    console.log('renderPaymentMethods 메서드 존재 여부:', typeof paymentWidget.renderPaymentMethods);
+
+    // 4. 메서드 존재 여부 확인 후 실행
+    if (typeof paymentWidget.renderPaymentMethods === 'function') {
       paymentWidget.renderPaymentMethods('#payment-method', 10000);
-
-      // 결제 요청
       paymentWidget.requestPayment({
-        orderId: 'ORDER-123', // 고유한 주문 ID
-        orderName: '결제 테스트 상품',
-        customerName: '홍길동',
-        successUrl: `${window.location.origin}/success`,
-        failUrl: `${window.location.origin}/fail`,
+        // ... 나머지 코드 ...
       });
-    };
+    } else {
+      console.error('❌ renderPaymentMethods 메서드가 존재하지 않습니다. 스크립트 로딩이 완전히 되지 않았거나, 클라이언트 키가 잘못되었습니다.');
+    }
+  };
 
-    // 컴포넌트 언마운트 시 스크립트 제거 (중복 로드 방지)
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+  script.onerror = () => {
+    console.error('❌ 토스 스크립트 로딩 실패');
+  };
+
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
 
   return <div id="payment-method"></div>;
 }
