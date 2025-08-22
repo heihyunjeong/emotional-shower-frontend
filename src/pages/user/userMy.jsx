@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../assets/css/user/userMy.css';
+import UserNav from './userNav'; // ✅ UserNav 컴포넌트 import
+
+import packaged from "../../assets/img/packaged.png";  // ✅ 패키지 이미지
+import profile from "../../assets/img/person.png";     // ✅ 프로필 이미지
 
 export default function MyPage() {
+  const navigate = useNavigate();
+
+  // ✅ 네비게이션 클릭 시 이동 처리
+  const handleNav = (key) => {
+    if (key === 'mypage') return; // 현재 페이지면 이동 안 함
+    if (key === 'home') navigate('/');
+    if (key === 'myequipment') navigate('/equipment');
+  };
+
   return (
     <div className="mypage-container">
       {/* Top Area */}
@@ -16,8 +29,9 @@ export default function MyPage() {
         <section className="head">
           <div className="profile">
             <div className="profile-pic">
+              {/* ✅ 프로필 이미지 적용 */}
               <img
-                src="https://placehold.co/60x60"
+                src={profile}  // ❗ 중괄호로 변수 사용
                 alt="프로필"
               />
             </div>
@@ -34,10 +48,11 @@ export default function MyPage() {
             <div className="in-progress__label">진행중인 보관</div>
             <div className="in-progress__count">신청완료 1건</div>
           </div>
+          {/* ✅ 패키지 이미지 적용 */}
           <img
             className="in-progress__icon"
-            src="https://placehold.co/48x48"
-            alt="Vault Icon"
+            src={packaged}  // ❗ 중괄호로 변수 사용
+            alt="진행중인 보관 아이콘"
           />
         </section>
 
@@ -75,27 +90,8 @@ export default function MyPage() {
         </div>
       </div>
 
-      {/* Bottom Navigation */}
-      <nav className="navigation-bar">
-        <div className="nav-menu">
-          <div className="nav-menu__icon">
-            <div className="Vector" />
-          </div>
-          <span className="nav-menu__text">홈</span>
-        </div>
-        <div className="nav-menu">
-          <div className="nav-menu__icon">
-            <div className="Vector" />
-          </div>
-          <span className="nav-menu__text">내 장비</span>
-        </div>
-        <div className="nav-menu active">
-          <div className="nav-menu__icon">
-            <div className="Vector" />
-          </div>
-          <span className="nav-menu__text">마이페이지</span>
-        </div>
-      </nav>
+      {/* ✅ 하단 네비게이션 */}
+      <UserNav active="mypage" onNavigate={handleNav} />
     </div>
   );
 }
