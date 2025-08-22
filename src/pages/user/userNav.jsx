@@ -4,8 +4,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../../assets/css/user/userNav.css";
 
 import home from "../../assets/img/home.png";
+import activehome from "../../assets/img/activehome.png";
 import equip from "../../assets/img/equip.png";
+import activeequip from "../../assets/img/activeequip.png";
 import my from "../../assets/img/my.png";
+import activemy from "../../assets/img/activeMy.png";
 
 const ROUTES = {
   home: "/home",
@@ -35,7 +38,11 @@ export default function UserNav({ active: activeProp }) {
         type="button"
         aria-current={active === "home" ? "page" : undefined}
       >
-        <img src={home} alt="홈" className="nav-icon" />
+        <img
+          src={active === "home" ? activehome : home}
+          alt="홈"
+          className="nav-icon"
+        />
         <span className="label">홈</span>
       </button>
 
@@ -45,7 +52,11 @@ export default function UserNav({ active: activeProp }) {
         type="button"
         aria-current={active === "myequipment" ? "page" : undefined}
       >
-        <img src={equip} alt="내 장비" className="nav-icon" />
+        <img
+          src={active === "myequipment" ? activeequip : equip}
+          alt="내 장비"
+          className="nav-icon"
+        />
         <span className="label">내 장비</span>
       </button>
 
@@ -55,7 +66,11 @@ export default function UserNav({ active: activeProp }) {
         type="button"
         aria-current={active === "mypage" ? "page" : undefined}
       >
-        <img src={my} alt="마이페이지" className="nav-icon" />
+        <img
+          src={active === "mypage" ? activemy : my}
+          alt="마이페이지"
+          className="nav-icon"
+        />
         <span className="label">마이페이지</span>
       </button>
     </nav>
