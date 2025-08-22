@@ -18,6 +18,8 @@ import Email from "./pages/email";
 import Password from "./pages/password";
 import PasswordConfirm from "./pages/passwordConfirm";
 import Phone from "./pages/phone";
+
+import FindVerify from "./pages/FindVerify";
 // user
   //home
 import UserHome from "./pages/user/userHome";
@@ -66,7 +68,7 @@ function App() {
           <Route path="/password" element={<Password />} />
           <Route path="/passwordconfirm" element={<PasswordConfirm />} />
           <Route path="/phone" element={<Phone />} />
-
+          <Route path="/find/id" element={<FindVerify />} />
           {/*User*/}
           <Route path="/home" element={<UserHome />} />          
           <Route path="/storing/equipmentselection" element={<UserEquipmentSelect />} />   

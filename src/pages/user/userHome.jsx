@@ -12,6 +12,10 @@ import "../../assets/css/user/userHome.css";
 import logo from "../../assets/img/logo.png";
 import achiv1 from "../../assets/img/4_1_1.png";
 
+import ining from "../../assets/img/in.png";
+import out from "../../assets/img/out.png";
+
+
 
 import UserNav from "./userNav"; // 또는 "./userNav" 파일명에 맞춰서
 
@@ -115,31 +119,33 @@ export default function UserHome() {
           </section>
 
           {/* 카드 액션들 */}
-          <section className="uh-cards">
-            <button
-              type="button"
-              className="uh-card"
-              onClick={() => navigate("/storing/equipmentselection")}
-            >
-              <div className="uh-card-icon" />
-              <div className="uh-card-txt">
-                <div className="uh-card-title">새 장비 등록</div>
-                <div className="uh-card-desc">1개 장비 보관중</div>
-              </div>
-            </button>
+         <section className="uh-cards">
+          <button
+            type="button"
+            className="uh-card"
+            onClick={() => navigate("/storing/equipmentselection")}
+          >
+            {/* 아이콘 이미지로 교체 */}
+            <img src={ining} alt="" className="uh-card-img" />
+            <div className="uh-card-txt">
+              <div className="uh-card-title">새 장비 등록</div>
+              <div className="uh-card-desc">1개 장비 보관중</div>
+            </div>
+          </button>
 
-            <button
-              type="button"
-              className="uh-card"
-              onClick={() => navigate("/equipment/checkout/warning")}
-            >
-              <div className="uh-card-icon" />
-              <div className="uh-card-txt">
-                <div className="uh-card-title">장비 꺼내기</div>
-                <div className="uh-card-desc">스노보드, 휘닉스파크</div>
-              </div>
-            </button>
-          </section>
+          <button
+            type="button"
+            className="uh-card"
+            onClick={() => navigate("/equipment/checkout/warning")}
+          >
+            {/* 아이콘 이미지로 교체 */}
+            <img src={out} alt="" className="uh-card-img" />
+            <div className="uh-card-txt">
+              <div className="uh-card-title">장비 꺼내기</div>
+              <div className="uh-card-desc">스노보드, 휘닉스파크</div>
+            </div>
+          </button>
+        </section>
 
           {/* ✅ 하단 내비게이션 교체 */}
           <UserNav active="home" onNavigate={handleNav} />

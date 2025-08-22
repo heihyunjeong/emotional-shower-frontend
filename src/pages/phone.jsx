@@ -16,6 +16,7 @@ import PrimaryButton from "./components/PrimaryButton";
 /* Icons */
 import backBut from "../assets/img/backBut.png";
 import xBut from "../assets/img/xBut.png";
+import pop from "../assets/img/pop.png";
 
 export default function Phone() {
   const [phone, setPhone] = useState("");
@@ -139,7 +140,7 @@ export default function Phone() {
               <div className="pbs-sheet pbs-enter">
                 <div className="pbs-handle" />
                 <div className="pbs-image">
-                  <div className="pbs-image-placeholder">IMG<br/>128×128</div>
+                  <img src={pop} alt="환영 아이콘" />
                 </div>
                 <h2 id="pbs-title" className="pbs-title">환영합니다, {userName}님!</h2>
                 <p className="pbs-subtitle">이제부터 장비는 저희가 안전하게 보관해드립니다.</p>

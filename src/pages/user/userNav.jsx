@@ -3,6 +3,10 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../assets/css/user/userNav.css";
 
+import home from "../../assets/img/home.png";
+import equip from "../../assets/img/equip.png";
+import my from "../../assets/img/my.png";
+
 const ROUTES = {
   home: "/home",
   myequipment: "/equipment",
@@ -31,7 +35,7 @@ export default function UserNav({ active: activeProp }) {
         type="button"
         aria-current={active === "home" ? "page" : undefined}
       >
-        <span className="icon home" />
+        <img src={home} alt="홈" className="nav-icon" />
         <span className="label">홈</span>
       </button>
 
@@ -41,7 +45,7 @@ export default function UserNav({ active: activeProp }) {
         type="button"
         aria-current={active === "myequipment" ? "page" : undefined}
       >
-        <span className="icon equip" />
+        <img src={equip} alt="내 장비" className="nav-icon" />
         <span className="label">내 장비</span>
       </button>
 
@@ -51,7 +55,7 @@ export default function UserNav({ active: activeProp }) {
         type="button"
         aria-current={active === "mypage" ? "page" : undefined}
       >
-        <span className="icon my" />
+        <img src={my} alt="마이페이지" className="nav-icon" />
         <span className="label">마이페이지</span>
       </button>
     </nav>

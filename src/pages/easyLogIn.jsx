@@ -24,6 +24,7 @@ function EasyLogin() {
   };
 
   const goTerms = () => navigate("/terms");
+  const goFind = () => navigate("/find/id");
 
   // Google 로그인 처리
   const handleGoogleLogin = async () => {
@@ -90,7 +91,7 @@ function EasyLogin() {
           <button type="submit" className="eL-login-btn">로그인</button>
 
           <div className="eL-links">
-            <button type="button" className="eL-text-btn">비밀번호 찾기</button>
+            <button type="button" className="eL-text-btn" onClick={goFind}>아이디 · 비밀번호 찾기</button>
             <span className="eL-sep" aria-hidden="true" />
             <button type="button" className="eL-text-btn" onClick={goTerms}>회원가입</button>
           </div>
