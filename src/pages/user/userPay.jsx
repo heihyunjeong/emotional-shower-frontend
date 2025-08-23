@@ -57,7 +57,7 @@ export default function UserPayment() {
   const goHome = () => navigate("/home");
 
   // 결제 생성 API 호출
-  const createPayment = async (paymentMethod, amount = 10000, description = "Borini 서비스 결제") => {
+  const createPayment = async (paymentMethod, amount = 100, description = "Borini 서비스 결제") => {
     try {
       const data = await paymentAPI.create({
         paymentMethod,
@@ -90,6 +90,25 @@ export default function UserPayment() {
     setError(null);
 
     try {
+      // 토스페이 선택 시 토스 결제 위젯 페이지로 이동
+      if (selected === "tosspay") {
+        console.log('Navigating to Toss payment widget...');
+        navigate("/user/toss-payment", { 
+          state: { 
+            paymentInfo: {
+              amount: 100,
+              orderId: `order_${Date.now()}`,
+              orderName: 'Borini 서비스 결제',
+              customerName: '고객',
+              customerEmail: 'customer@example.com',
+              customerKey: `customer_${Date.now()}`
+            }
+          } 
+        });
+        return;
+      }
+
+      // 다른 결제 수단들은 기존 로직 유지
       // 1. 결제 생성
       console.log('Creating payment for method:', selected);
       const createResult = await createPayment(selected);
@@ -109,21 +128,14 @@ export default function UserPayment() {
         throw new Error(processResult.message);
       }
 
-      // 3. 결제 방식에 따른 처리
-      if (selected === "tosspay" && processResult.payment.status === "REDIRECT_REQUIRED") {
-        // 토스페이 선택 시, 토스 결제 페이지로 리다이렉트
-        console.log('Redirecting to Toss payment page...');
-        window.location.href = processResult.redirectUrl || "https://borini.app/payment";
-      } else {
-        // 그 외 결제 수단은 완료 페이지로 이동
-        console.log('Payment completed, navigating to success page...');
-        navigate("/storing/paymentcomplete", { 
-          state: { 
-            paymentInfo: processResult.payment,
-            paymentMethod: selected 
-          } 
-        });
-      }
+      // 3. 완료 페이지로 이동
+      console.log('Payment completed, navigating to success page...');
+      navigate("/storing/paymentcomplete", { 
+        state: { 
+          paymentInfo: processResult.payment,
+          paymentMethod: selected 
+        } 
+      });
 
     } catch (error) {
       console.error('Payment error:', error);
@@ -167,7 +179,7 @@ export default function UserPayment() {
                 role="listitem"
                 className={`grid-item ${span} ${isSelected ? "selected" : ""}`}
                 onClick={() => handleSelect(m.id)}
-                aria-pressed={isSelected}
+                aria-selected={isSelected}
                 disabled={loading}
               > 
                 {m.type === "img" && m.src ? (

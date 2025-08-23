@@ -7,6 +7,11 @@ import PaymentPage from './pages/Payment';
 import Success from './pages/Success';
 import Fail from './pages/Fail';
 
+// 토스페이먼트 결제 플로우
+import TossPaymentWidget from './pages/user/TossPaymentWidget';
+import PaymentSuccess from './pages/user/PaymentSuccess';
+import PaymentFail from './pages/user/PaymentFail';
+
 import Splash from "./pages/splash";
 // pre-login
 import Onboarding from "./pages/onboarding";
@@ -77,7 +82,11 @@ function App() {
           <Route path="/storing/storinginfo" element={<UserStoringInfo />} />   
           <Route path="/storing/terms" element={<UserTerms />} />   
           <Route path="/storing/paymentmethod" element={<UserPaymentMethod />} />   
-          <Route path="/storing/paymentcomplete" element={<UserPaymentComplete />} /> 
+          <Route path="/storing/paymentcomplete" element={<UserPaymentComplete />} />
+          {/* 토스페이먼트 결제 플로우 */}
+          <Route path="/user/toss-payment" element={<TossPaymentWidget />} />
+          <Route path="/payment/success" element={<PaymentSuccess />} />
+          <Route path="/payment/fail" element={<PaymentFail />} /> 
           {/*User - StoredEquipment */}
           <Route path="/equipment" element={<UserEquipStored />} /> 
           <Route path="/equipment/detail" element={<UserEquipmentDetail />} /> 
