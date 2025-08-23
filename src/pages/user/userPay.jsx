@@ -10,6 +10,9 @@ import ProgressBar from "../components/ProgressBar";
 import PageTitle from "../components/PageTitle";
 import PrimaryButton from "../components/PrimaryButton";
 
+// API 헬퍼 가져오기
+import { paymentAPI } from "../../utils/apiHelper";
+
 import backBut from "../../assets/img/backBut.png";
 import xBut from "../../assets/img/xBut.png";
 
@@ -28,8 +31,7 @@ const METHODS = [
   { id: "card",     type: "text", label: "신용카드 / 체크카드" } // full width
 ];
 
-// API 기본 URL
-const API_BASE_URL = 'http://localhost:8080/api';
+// API_BASE_URL은 이제 config/api.js에서 관리됩니다
 
 export default function UserPayment() {
   const navigate = useNavigate();
@@ -48,23 +50,11 @@ export default function UserPayment() {
   // 결제 생성 API 호출
   const createPayment = async (paymentMethod, amount = 10000, description = "Borini 서비스 결제") => {
     try {
-      const response = await fetch(`${API_BASE_URL}/payments/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          paymentMethod,
-          amount,
-          description
-        })
+      const data = await paymentAPI.create({
+        paymentMethod,
+        amount,
+        description
       });
-
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || '결제 생성에 실패했습니다.');
-      }
 
       return data;
     } catch (error) {
@@ -76,19 +66,7 @@ export default function UserPayment() {
   // 결제 처리 API 호출
   const processPayment = async (paymentId) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/payments/${paymentId}/process`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || '결제 처리에 실패했습니다.');
-      }
-
+      const data = await paymentAPI.process(paymentId);
       return data;
     } catch (error) {
       console.error('Payment processing error:', error);
