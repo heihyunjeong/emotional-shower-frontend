@@ -1,110 +1,115 @@
-/* ---------- Top area: Back + Close ---------- */
-.top-area-sub-page {
-  position: absolute;
-  top: 44px;        /* 상태바 아래 */
-  left: 0;
-  width: 100%;
-  height: 60px;
-  z-index: 50;
-}
+  /* ---------- Top area: Back + Close ---------- */
+  .top-area-sub-page {
+    position: absolute;
+    top: 44px;        /* 상태바 아래 */
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 50;
+  }
 
-.top-area-sub-page .icon-arrow-left,
-.top-area-sub-page .icon-close {
-  position: absolute;
-  top: 12px;                 /* 두 버튼 같은 높이 */
-  width: 36px; height: 36px; /* 터치 타겟 */
-  background: transparent; border: 0;
-  display: inline-flex; align-items: center; justify-content: center;
-  cursor: pointer; border-radius: 18px;
-  padding: 0;
-}
+  .top-area-sub-page .icon-arrow-left,
+  .top-area-sub-page .icon-close {
+    position: absolute;
+    top: 12px;                 /* 두 버튼 같은 높이 */
+    width: 36px; height: 36px; /* 터치 타겟 */
+    background: transparent; border: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; border-radius: 18px;
+    padding: 0;
+  }
 
-.top-area-sub-page .icon-arrow-left { left: calc(20px + env(safe-area-inset-left)); }
-.top-area-sub-page .icon-close      { right: calc(20px + env(safe-area-inset-right)); }
+  .top-area-sub-page .icon-arrow-left { left: calc(20px + env(safe-area-inset-left)); }
+  .top-area-sub-page .icon-close      { right: calc(20px + env(safe-area-inset-right)); }
 
-.top-area-sub-page .icon-img {
-  width: 24px; height: 24px;
-  object-fit: contain; display: block;
-}
+  .top-area-sub-page .icon-img {
+    width: 24px; height: 24px;
+    object-fit: contain; display: block;
+  }
 
-@media (hover:hover){
-  .top-area-sub-page .icon-arrow-left:hover,
-  .top-area-sub-page .icon-close:hover { background: rgba(0,0,0,.04); }
-}
-.top-area-sub-page .icon-arrow-left:active,
-.top-area-sub-page .icon-close:active { background: rgba(0,0,0,.06); }
+  @media (hover:hover){
+    .top-area-sub-page .icon-arrow-left:hover,
+    .top-area-sub-page .icon-close:hover { background: rgba(0,0,0,.04); }
+  }
+  .top-area-sub-page .icon-arrow-left:active,
+  .top-area-sub-page .icon-close:active { background: rgba(0,0,0,.06); }
 
-/* ---------- Progress bar (헤더 아래 104px) ---------- */
-.ux-progress {
-  position: absolute; top: 104px; left: 0;
-  width: 100%; height: 4px;
-}
-.ux-progress .bg   { width: 100%; height: 4px; background: #f5f5f5; }
-.ux-progress .fill {
-  position: absolute; top: 0; left: 0; height: 4px; background: #ff4e49;
-  border-top-right-radius: 18px; border-bottom-right-radius: 18px;
-}
+  /* ---------- Progress bar (헤더 아래 104px) ---------- */
+  .ux-progress {
+    position: absolute; top: 104px; left: 0;
+    width: 100%; height: 4px;
+  }
+  .ux-progress .bg   { width: 100%; height: 4px; background: #f5f5f5; }
+  .ux-progress .fill {
+    position: absolute; top: 0; left: 0; height: 4px; background: #ff4e49;
+    border-top-right-radius: 18px; border-bottom-right-radius: 18px;
+  }
 
-/* ---------- Page Title (통일 위치/타이포) ---------- */
-.ux-title {
-  position: absolute; top: 140px; left: 50%; transform: translateX(-50%);
+  /* ---------- Page Title (통일 위치/타이포) ---------- */
+  .ux-title {
+  position: absolute; 
+  top: 140px; 
+  left: 50%; 
+  transform: translateX(-50%);
   width: calc(100% - 40px);
   font: 700 24px/29px 'Pretendard', system-ui, -apple-system, sans-serif;
-  color: #171717; text-align: left;
+  color: #171717; 
+  text-align: left;
+  z-index: 45; /* Ensure title is above other elements */
 }
 
-/* 버튼 자체는 absolute 제거: 공용 버튼 스타일만 유지 */
-.primary-button {
-  display: block;
-  width: 100%;
-  padding: 16px;
-  background: #ff4e49;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
-  text-align: center;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-.primary-button.active {
-  box-shadow: 0 6px 16px rgba(255, 78, 73, 0.25);
-}
-.primary-button:disabled,
-.primary-button[aria-disabled="true"] {
-  opacity: .5;
-  cursor: default;
-}
+  /* 버튼 자체는 absolute 제거: 공용 버튼 스타일만 유지 */
+  .primary-button {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: #ff4e49;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+    text-align: center;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+  }
+  .primary-button.active {
+    box-shadow: 0 6px 16px rgba(255, 78, 73, 0.25);
+  }
+  .primary-button:disabled,
+  .primary-button[aria-disabled="true"] {
+    opacity: .5;
+    cursor: default;
+  }
 
-/* ✅ 화면 하단 고정 푸터 */
-.fixed-cta {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
-  width: 100%;
-  max-width: 360px;                /* 페이지 최대폭에 맞춤 */
-  padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
-  z-index: 1000;
-}
+  /* ✅ 화면 하단 고정 푸터 */
+  .fixed-cta {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 100%;
+    max-width: 360px;                /* 페이지 최대폭에 맞춤 */
+    padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
+    z-index: 1000;
+  }
 
-/* 본문이 가려지지 않도록 여유 공간 확보 */
-.confirmation-content {
-  padding: 32px 20px 120px;        /* ⬅️ 하단 여백(푸터 높이만큼) */
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  flex: 1;
-}
+  /* 본문이 가려지지 않도록 여유 공간 확보 */
+  .confirmation-content {
+    padding: 32px 20px 120px;        /* ⬅️ 하단 여백(푸터 높이만큼) */
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    flex: 1;
+  }
 
-/* 컨테이너는 플렉스 레이아웃 유지 */
-.confirmation-container {
-  width: 100%;
-  max-width: 360px;
-  min-height: 800px;
-  margin: 0 auto;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
+  /* 컨테이너는 플렉스 레이아웃 유지 */
+  .confirmation-container {
+    width: 100%;
+    max-width: 360px;
+    min-height: 800px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }

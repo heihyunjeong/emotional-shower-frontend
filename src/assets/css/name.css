@@ -77,10 +77,13 @@
 
 /* ===== Form (fills canvas) ===== */
 .n-form{
+  position: absolute;
   width:100%;
   max-width:480px;
   margin:40px auto 0;
   display:flex; flex-direction:column; align-items:stretch;
+  padding: 20px;
+   z-index: 40; 
 }
 
 .n-label{

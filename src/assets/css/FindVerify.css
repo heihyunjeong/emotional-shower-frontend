@@ -1,177 +1,216 @@
-/* src/assets/css/find.css */
+:root{
+  --fv-primary: #FF4E49;
+  --fv-gray-0: #fff;
+  --fv-gray-50:#fafafa;
+  --fv-gray-100:#f5f5f5;
+  --fv-gray-200:#e5e5e5;
+  --fv-gray-300:#d4d4d4;
+  --fv-gray-400:#a3a3a3;
+  --fv-gray-600:#737373;
+  --fv-gray-900:#171717;
+  --fv-container: 360px;
+  --fv-font: 'Pretendard', system-ui, -apple-system, sans-serif;
+}
 
-/* Container: 360 base, 480 max; 800 high mobile spec */
-.find-container {
+/* page scaffold (no fake status / home indicator) */
+.fv-app{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  background: var(--fv-gray-0);
+}
+.fv-page{
+  width:100%;
+  max-width: var(--fv-container);
+  min-height: 800px;
   position: relative;
+  background: var(--fv-gray-0);
+
+  /* Ensure content starts below absolute header (44 + 60) */
+  padding-top: 104px;
+}
+
+/* ------------------------------------------
+   Tabs (between header & progress)
+------------------------------------------- */
+.fv-page .fv-tabs{
+  display:flex;
+  height:44px;
+  background: var(--fv-gray-0);
+  border-bottom: 1px solid #ECEBE2;
+  /* sits visually under header; header has a higher z-index in its own CSS */
+  z-index: 1;
+}
+.fv-page .fv-tab{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position: relative;
+  gap:9px;
+}
+.fv-page .fv-tab .txt{
+  font: 600 16px/22px var(--fv-font);
+  color: var(--fv-gray-900);
+  letter-spacing:-0.6px;
+}
+.fv-page .fv-tab .txt.dim{
+  color: var(--fv-gray-400);
+  font-weight:500;
+  letter-spacing:-0.25px;
+}
+.fv-page .fv-tab.active .txt{
+  color: var(--fv-primary);
+  height:4px;
+}
+.fv-page .fv-tab .bar{
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:4px;
+  background: var(--fv-primary);
+}
+
+/* ------------------------------------------
+   Progress under tabs
+   (We only scope; actual bar styling is owned by the component if shared)
+------------------------------------------- */
+.fv-page .ux-progress{
+  width:100%;
+  height:4px;
+  position:relative;
+  z-index: 0;
+}
+.fv-page .ux-progress .bg{
+  width:100%; height:4px; background: var(--fv-gray-100);
+}
+.fv-page .ux-progress .fill{
+  position:absolute; top:0; left:0; height:4px; background: var(--fv-primary);
+  border-top-right-radius:18px; border-bottom-right-radius:18px;
+}
+
+/* ------------------------------------------
+   Title (PageTitle component uses .ux-title;
+   We do NOT override it globally, just rely on its own margins.
+------------------------------------------- */
+
+/* ------------------------------------------
+   Form
+------------------------------------------- */
+.fv-form {
+  position: absolute;
+  top: 200px; /* Increased from previous value to create space below title */
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   max-width: 360px;
-  min-height: 800px;
-  margin: 0 auto;
-  background: #fff;
-  overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 40; /* Below title but above other elements */
+}
+.fv-page .fv-label{
+  font: 600 16px/24px var(--fv-font);
+  color: var(--fv-gray-900);
+  margin-top: 4px;
 }
 
-/* -------- Top Bar (44 status + 60 header) -------- */
-.find-topbar {
-  position: absolute;
-  top: 44px;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  z-index: 50;
+.fv-page .fv-input{
+  position:relative;
+  background: var(--fv-gray-0);
+  border: 1px solid var(--fv-gray-200);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display:flex; align-items:center; gap:8px;
+}
+.fv-page .fv-input.ok{
+  border-color: var(--fv-gray-900);
 }
 
-.find-back {
-  position: absolute;
-  top: 12px;
-  left: calc(20px + env(safe-area-inset-left));
-  width: 36px;
-  height: 36px;
-  border: 0;
-  background: transparent;
-  display: inline-flex;
+.fv-page .fv-input input{
+  flex:1; border:0; outline:0; background:transparent;
+  font: 400 16px/24px var(--fv-font);
+  color: var(--fv-gray-900);
+}
+.fv-page .fv-input input::placeholder{
+  color: var(--fv-gray-400);
+}
+
+.fv-page .fv-clear{
+  position:absolute; right:12px; top:50%; transform: translateY(-50%);
+  width:24px; height:24px; border-radius:12px;
+  background:#efefef; color:#9a9a9a; border:0; cursor:pointer;
+  display:grid; place-items:center; font-size:14px; line-height:1;
+}
+
+/* verify row */
+.fv-page .fv-verify-row{
+  display:flex;
+  align-items:center;
+  gap:12px;            /* a little extra spacing */
+  white-space: nowrap; /* prevent the timer from wrapping */
+}
+.fv-page .fv-input.code {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 18px;
-  cursor: pointer;
-  padding: 0;
+  justify-content: space-between;  /* input left, timer right */
+  gap: 8px;
+  flex: 1;
+  position: relative;
 }
-.find-icon { width: 24px; height: 24px; display: block; }
 
-.find-back:hover { background: rgba(0,0,0,.04); }
-.find-back:active { background: rgba(0,0,0,.06); }
+.fv-page .fv-input.code input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: 400 16px/24px var(--fv-font);
+  color: var(--fv-gray-900);
+}
 
-.find-center-title {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  font: 600 16px/16px "Pretendard", system-ui, -apple-system, sans-serif;
-  color: #171717;
+.fv-page .fv-input.code .fv-timer {
+  font: 600 16px/24px var(--fv-font);
+  color: var(--fv-gray-600);
   white-space: nowrap;
 }
-
-/* -------- Tabs (under topbar) -------- */
-.find-tabs {
-  position: absolute;
-  top: 104px; /* 44 + 60 */
-  left: 0;
-  width: 100%;
-  display: flex;
-  background: #fff;
+.fv-page .fv-timer{
+  margin-left:auto;    /* push it to the far right */
+  text-align:right;
+  min-width: 52px;     /* fits "10:00" nicely */
+  font: 600 16px/24px var(--fv-font);
+  color: var(--fv-gray-600);
 }
 
-.find-tab {
-  flex: 1 1 50%;
-  height: 44px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 10px;
-  border: 0;
-  background: #fff;
-  cursor: pointer;
-  color: #a3a3a3;
-  font: 600 16px/22px "Pretendard", system-ui, -apple-system, sans-serif;
-  letter-spacing: -0.25px;
+
+/* hint + resend */
+.fv-page .fv-hint-row{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top: 8px;
 }
-.find-tab.is-active {
-  color: var(--boriniprimary-3, #ff4e49);
-  position: relative;
+.fv-page .fv-hint{
+  font: 400 14px/20px var(--fv-font);
+  color: var(--fv-gray-400);
 }
-.find-tab.is-active::after {
-  content: "";
-  position: absolute;
-  left: 20%;
-  right: 20%;
-  bottom: 0;
-  height: 2px;
-  background: var(--boriniprimary-3, #ff4e49);
-  border-radius: 2px;
+.fv-page .fv-hint.ok{ color: var(--fv-gray-900); }
+.fv-page .fv-hint.error{ color: #e63946; }
+
+.fv-page .fv-resend{
+  border:0; border-radius:6px; padding:6px 12px;
+  font: 500 14px/20px var(--fv-font);
+  background: var(--fv-gray-100); color: var(--fv-gray-400);
+  cursor: default;
+}
+.fv-page .fv-resend:not([disabled]){
+  background: var(--fv-primary); color: #fff; cursor:pointer;
 }
 
-/* -------- Progress bar (under tabs) -------- */
-.find-progress {
-  position: absolute;
-  top: 148px; /* 104 + 44 */
-  left: 0;
-  width: 100%;
-  height: 4px;
-}
-.find-progress-bg { width: 100%; height: 4px; background: #f5f5f5; }
-.find-progress-fill {
-  position: absolute;
-  top: 0; left: 0;
-  height: 4px;
-  background: #ff4e49;
-  border-top-right-radius: 18px;
-  border-bottom-right-radius: 18px;
-}
-
-/* -------- Page Title (under progress) -------- */
-.find-title {
-  position: absolute;
-  top: 192px; /* 148 + ~40 spacing */
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 40px);
-  margin: 0;
-  font: 700 24px/29px "Pretendard", system-ui, -apple-system, sans-serif;
-  color: #171717;
-  text-align: left;
-}
-
-/* -------- Content area (pad bottom so CTA doesn't overlap) -------- */
-.find-content {
-  padding: 32px 20px 120px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  position: relative;
-  top: 220px; /* below title */
-}
-
-.find-desc {
-  font: 400 14px/20px "Pretendard", system-ui, -apple-system, sans-serif;
-  color: #525252;
-}
-
-/* -------- Fixed CTA -------- */
-.find-fixed-cta {
+/* ------------------------------------------
+   Bottom CTA (button is your shared PrimaryButton)
+------------------------------------------- */
+.fv-page .fv-cta{
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 50%; transform: translateX(-50%);
   bottom: 0;
-  width: 100%;
-  max-width: 360px;
+  width: 100%; max-width: var(--fv-container);
   padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
-  background: #fff;
-  box-shadow: 0 -8px 16px rgba(0,0,0,.06);
+  background: transparent;
   z-index: 1000;
-}
-.find-fixed-cta > * { width: 100%; }
-
-/* Fallback button if you don’t use PrimaryButton */
-.find-primary-btn {
-  width: 100%;
-  padding: 16px;
-  border: 0;
-  border-radius: 8px;
-  font: 700 16px/22px "Pretendard", system-ui, -apple-system, sans-serif;
-  color: #fff;
-  background: #ff4e49;
-  cursor: pointer;
-}
-
-/* -------- Wide screens: keep column centered, allow 480 max -------- */
-@media (min-width: 481px) {
-  .find-container,
-  .find-topbar,
-  .find-tabs,
-  .find-progress,
-  .find-title {
-    max-width: 480px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
 }

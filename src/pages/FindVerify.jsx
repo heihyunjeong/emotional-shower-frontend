@@ -1,29 +1,34 @@
 // src/pages/FindVerify.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+/* global CSS you already have */
 import "../assets/css/all.css";
 import "../assets/css/user/usermain.css";
+
+/* page-scoped CSS */
 import "../assets/css/FindVerify.css";
 import "../assets/css/components/uiCommon.css";
+import "../assets/css/components/topAreaHeader.css";
 
-/* Shared UI */
-import PrimaryButton from "./components/PrimaryButton";
-/* ✅ New header */
+/* shared UI */
 import TopAreaSubPageVariation from "./components/TopAreaSubPageVariation";
+import ProgressBar from "./components/ProgressBar";
+import PageTitle from "./components/PageTitle";
+import PrimaryButton from "./components/PrimaryButton";
 
-/* (Optional) back icon asset — or pass null if you render a text arrow inside */
+/* icon */
 import backBut from "../assets/img/backBut.png";
 
-/* Where to go after verification */
 const NEXT_PATH = "/find/result";
 
 export default function FindVerify() {
-  const rootRef = useRef(null);
   const navigate = useNavigate();
+  const pageRef = useRef(null);
 
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
-  const [codeSent, setCodeSent] = useState(true);     // already sent (matches screenshot state)
+  const [codeSent, setCodeSent] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(118); // 1:58
 
   // validity
@@ -32,7 +37,7 @@ export default function FindVerify() {
   const codeValid = /^\d{6}$/.test(code);
   const canNext = phoneValid && codeValid;
 
-  // message
+  // hint
   const message = useMemo(() => {
     if (!code) return "여기에 메시지 입력";
     return codeValid ? "인증번호가 일치합니다" : "인증번호가 일치하지 않습니다";
@@ -42,7 +47,10 @@ export default function FindVerify() {
   // timer
   useEffect(() => {
     if (!codeSent || secondsLeft <= 0) return;
-    const t = setInterval(() => setSecondsLeft((s) => (s > 0 ? s - 1 : 0)), 1000);
+    const t = setInterval(
+      () => setSecondsLeft((s) => (s > 0 ? s - 1 : 0)),
+      1000
+    );
     return () => clearInterval(t);
   }, [codeSent, secondsLeft]);
 
@@ -58,13 +66,18 @@ export default function FindVerify() {
     setCodeSent(true);
   };
 
-  // keyboard-safe bottom inset
+  const handleNext = () => {
+    if (!canNext) return;
+    navigate(NEXT_PATH);
+  };
+
+  // keyboard-safe bottom inset (no fake status/home bars)
   useEffect(() => {
     const vv = window.visualViewport;
-    if (!vv || !rootRef.current) return;
+    if (!vv || !pageRef.current) return;
     const updateKbOffset = () => {
       const hidden = Math.max(0, window.innerHeight - (vv.height + vv.offsetTop));
-      rootRef.current.style.setProperty("--kb-offset", `${Math.round(hidden)}px`);
+      pageRef.current.style.setProperty("--kb-offset", `${Math.round(hidden)}px`);
     };
     vv.addEventListener("resize", updateKbOffset);
     vv.addEventListener("scroll", updateKbOffset);
@@ -72,105 +85,106 @@ export default function FindVerify() {
     return () => {
       vv.removeEventListener("resize", updateKbOffset);
       vv.removeEventListener("scroll", updateKbOffset);
-      rootRef.current?.style.removeProperty("--kb-offset");
+      pageRef.current?.style.removeProperty("--kb-offset");
     };
   }, []);
 
   return (
-    <div className="find-root" ref={rootRef}>
+    <div className="fv-app" ref={pageRef}>
+      <div className="fv-page">
+        {/* Header */}
+        <TopAreaSubPageVariation
+          onBack={() => navigate(-1)}
+          backIcon={backBut}
+          title="아이디 · 비밀번호 찾기"
+        />
 
-      {/* ✅ Top header (center title) */}
-      <TopAreaSubPageVariation
-        onBack={() => navigate(-1)}
-        backIcon={backBut}
-        title="아이디 · 비밀번호 찾기"
-      />
-
-      {/* Tabs */}
-      <div className="tab-group-line">
-        <div className="tab-line">
-          <div className="label active">
-            <div className="tab-text">아이디 찾기</div>
-            <div className="tab-underline" />
+        {/* Tabs (active: 아이디 찾기) */}
+        <div className="fv-tabs">
+          <div className="fv-tab active">
+            <span className="txt">아이디 찾기</span>
+            <span className="bar" />
+          </div>
+          <div className="fv-tab">
+            <span className="txt dim">비밀번호 찾기</span>
           </div>
         </div>
-        <div className="tab-line">
-          <div className="label">
-            <div className="tab-text dim">비밀번호 찾기</div>
-          </div>
-        </div>
-      </div>
 
-      {/* Content */}
-      <div className="title-block">
-        <div className="title">본인 인증하기</div>
+        {/* Title */}
+        <PageTitle>본인 인증하기</PageTitle>
 
-        <div className="form">
+        {/* Form */}
+        <form className="fv-form" onSubmit={(e) => e.preventDefault()}>
           {/* 휴대폰 번호 */}
-          <div className="field">
-            <label className="label">휴대폰 번호</label>
-            <div className={`input-field ${phoneValid ? "ok" : ""}`}>
-              <input
-                type="tel"
-                inputMode="numeric"
-                placeholder="휴대폰 번호를 입력해주세요"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-              {!!phone && (
-                <button className="clear-btn" onClick={() => setPhone("")} aria-label="지우기">⨯</button>
-              )}
-            </div>
+          <label htmlFor="fv-phone" className="fv-label">
+            휴대폰 번호
+          </label>
+          <div className={`fv-input ${phoneValid ? "ok" : ""}`}>
+            <input
+              id="fv-phone"
+              type="tel"
+              inputMode="numeric"
+              placeholder="휴대폰 번호를 입력해주세요"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+            {!!phone && (
+              <button
+                type="button"
+                className="fv-clear"
+                aria-label="지우기"
+                onClick={() => setPhone("")}
+              >
+                ⨯
+              </button>
+            )}
           </div>
 
-          {/* 인증 번호 */}
-          <div className="field">
-            <label className="label">인증 번호</label>
-            <div className="verify-row">
-              <div className={`input-field code ${codeValid ? "ok" : ""}`}>
-                <input
-                  type="tel"
-                  inputMode="numeric"
-                  maxLength={6}
-                  placeholder="인증번호 6자리를 입력해주세요"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
-                />
-              </div>
-              <div className="timer">{mmss}</div>
-            </div>
+          {/* 인증 번호 + 타이머 */}
+          <label htmlFor="fv-code" className="fv-label">
+            인증 번호
+          </label>
+          <div className="fv-input code">
+            <input
+              id="fv-code"
+              type="tel"
+              inputMode="numeric"
+              maxLength={6}
+              placeholder="인증번호 6자리를 입력해주세요"
+              value={code}
+              onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
+            />
+            <span className="fv-timer">{mmss}</span>
           </div>
 
-          <div className="hint-row">
-            <div className={`hint ${messageClass}`}>{message}</div>
+
+          {/* 힌트 + 재발송 */}
+          <div className="fv-hint-row">
+            <span className={`fv-hint ${messageClass}`}>{message}</span>
             <button
-              className="resend-btn"
+              type="button"
+              className="fv-resend"
               disabled={secondsLeft > 0}
               onClick={handleResend}
-              type="button"
             >
               인증번호 재발송
             </button>
           </div>
+        </form>
+
+        {/* Bottom CTA */}
+        <div
+          className="fv-cta"
+          style={{
+            paddingBottom:
+              "calc(16px + env(safe-area-inset-bottom) + var(--kb-offset, 0px))",
+          }}
+        >
+          <PrimaryButton onClick={handleNext} disabled={!canNext} active={canNext}>
+            다음
+          </PrimaryButton>
         </div>
       </div>
-
-      {/* Bottom fixed CTA using PrimaryButton */}
-      <div
-        className="cta-wrap"
-        style={{ paddingBottom: "calc(16px + env(safe-area-inset-bottom) + var(--kb-offset, 0px))" }}
-      >
-        <PrimaryButton
-          onClick={() => navigate(NEXT_PATH)}
-          disabled={!canNext}
-          active={canNext}
-        >
-          다음
-        </PrimaryButton>
-      </div>
-
-      {/* (Dummy) home indicator */}
-      <div className="home-indicator" />
     </div>
   );
 }
