@@ -93,6 +93,8 @@ export default function UserPayment() {
       // 토스페이 선택 시 토스 결제 위젯 페이지로 이동
       if (selected === "tosspay") {
         console.log('Navigating to Toss payment widget...');
+        
+        // 토스페이는 별도 API 호출 없이 바로 위젯으로 이동
         navigate("/user/toss-payment", { 
           state: { 
             paymentInfo: {
@@ -105,6 +107,7 @@ export default function UserPayment() {
             }
           } 
         });
+        setLoading(false); // 로딩 상태 해제
         return;
       }
 
