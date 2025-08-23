@@ -33,12 +33,11 @@ export default function InProgressStorage() {
 
       {/* Tab group */}
       <div className="tab-group">
-        <div className="tab">신청 완료</div>
-        <div className="tab">보관 중</div>
-        <div className="tab active">
-          보관 종료
-          <div className="tab-bar" />
-          </div>
+        <div className="tab">
+          신청 완료
+        </div>
+        <div className="tab">보관 중 </div>
+        <div className="tab active">보관 종료<div className="tab-bar" /></div>
       </div>
 
       {/* Item list */}

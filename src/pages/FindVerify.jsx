@@ -1,11 +1,18 @@
+// src/pages/FindVerify.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/all.css";
 import "../assets/css/user/usermain.css";
 import "../assets/css/FindVerify.css";
+import "../assets/css/components/uiCommon.css";
 
-/* Use your shared PrimaryButton */
+/* Shared UI */
 import PrimaryButton from "./components/PrimaryButton";
+/* ✅ New header */
+import TopAreaSubPageVariation from "./components/TopAreaSubPageVariation";
+
+/* (Optional) back icon asset — or pass null if you render a text arrow inside */
+import backBut from "../assets/img/backBut.png";
 
 /* Where to go after verification */
 const NEXT_PATH = "/find/result";
@@ -51,7 +58,7 @@ export default function FindVerify() {
     setCodeSent(true);
   };
 
-  // keyboard-safe bottom inset (like other pages in your app)
+  // keyboard-safe bottom inset
   useEffect(() => {
     const vv = window.visualViewport;
     if (!vv || !rootRef.current) return;
@@ -71,17 +78,13 @@ export default function FindVerify() {
 
   return (
     <div className="find-root" ref={rootRef}>
-      {/* (Dummy) status bar */}
-      <div className="status-bar">
-        <div className="sb-left">9:41</div>
-        <div className="sb-right"><span className="dot" /><span className="dot" /><span className="dot" /></div>
-      </div>
 
-      {/* Top bar + title */}
-      <div className="top-area-sub-page">
-        <button className="icon-arrow-left" aria-label="뒤로가기" onClick={() => navigate(-1)}>‹</button>
-        <div className="page-title">아이디 · 비밀번호 찾기</div>
-      </div>
+      {/* ✅ Top header (center title) */}
+      <TopAreaSubPageVariation
+        onBack={() => navigate(-1)}
+        backIcon={backBut}
+        title="아이디 · 비밀번호 찾기"
+      />
 
       {/* Tabs */}
       <div className="tab-group-line">
