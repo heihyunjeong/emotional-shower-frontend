@@ -28,29 +28,123 @@ const METHODS = [
   { id: "card",     type: "text", label: "신용카드 / 체크카드" } // full width
 ];
 
+// API 기본 URL
+const API_BASE_URL = 'http://localhost:8080/api';
+
 export default function UserPayment() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSelect = (id) => setSelected(id);
-
-
+  const handleSelect = (id) => {
+    setSelected(id);
+    setError(null); // 에러 메시지 초기화
+  };
 
   const goBack = () => navigate(-1);
   const goHome = () => navigate("/home");
 
-const handlePay = () => {
-  if (!selected) return;
+  // 결제 생성 API 호출
+  const createPayment = async (paymentMethod, amount = 10000, description = "Borini 서비스 결제") => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/payments/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          paymentMethod,
+          amount,
+          description
+        })
+      });
 
-  if (selected === "tosspay") {
-    // 토스페이 선택 시, 토스 결제 페이지로 이동
-    window.location.href = "https://borini.app/payment";
-  } else {
-    // 그 외 결제 수단은 내부 페이지로 이동
-    navigate("/storing/paymentcomplete");
-  }
-};
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || '결제 생성에 실패했습니다.');
+      }
 
+      return data;
+    } catch (error) {
+      console.error('Payment creation error:', error);
+      throw error;
+    }
+  };
+
+  // 결제 처리 API 호출
+  const processPayment = async (paymentId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/payments/${paymentId}/process`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || '결제 처리에 실패했습니다.');
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Payment processing error:', error);
+      throw error;
+    }
+  };
+
+  const handlePay = async () => {
+    if (!selected) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // 1. 결제 생성
+      console.log('Creating payment for method:', selected);
+      const createResult = await createPayment(selected);
+      
+      if (!createResult.success) {
+        throw new Error(createResult.message);
+      }
+
+      const paymentId = createResult.payment.id;
+      console.log('Payment created with ID:', paymentId);
+
+      // 2. 결제 처리
+      console.log('Processing payment...');
+      const processResult = await processPayment(paymentId);
+
+      if (!processResult.success) {
+        throw new Error(processResult.message);
+      }
+
+      // 3. 결제 방식에 따른 처리
+      if (selected === "tosspay" && processResult.payment.status === "REDIRECT_REQUIRED") {
+        // 토스페이 선택 시, 토스 결제 페이지로 리다이렉트
+        console.log('Redirecting to Toss payment page...');
+        window.location.href = processResult.redirectUrl || "https://borini.app/payment";
+      } else {
+        // 그 외 결제 수단은 완료 페이지로 이동
+        console.log('Payment completed, navigating to success page...');
+        navigate("/storing/paymentcomplete", { 
+          state: { 
+            paymentInfo: processResult.payment,
+            paymentMethod: selected 
+          } 
+        });
+      }
+
+    } catch (error) {
+      console.error('Payment error:', error);
+      setError(error.message || '결제 처리 중 오류가 발생했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="payment-container">
@@ -58,6 +152,20 @@ const handlePay = () => {
       <TopAreaSubPage onBack={goBack} onClose={goHome} backIcon={backBut} closeIcon={xBut} />
       <ProgressBar width="100%" />
       <PageTitle>결제 방식을<br/>선택해주세요</PageTitle>
+
+      {/* 에러 메시지 표시 */}
+      {error && (
+        <div className="error-message" style={{
+          backgroundColor: '#ffebee',
+          color: '#c62828',
+          padding: '12px',
+          margin: '16px',
+          borderRadius: '8px',
+          border: '1px solid #ffcdd2'
+        }}>
+          {error}
+        </div>
+      )}
 
       {/* 본문: 2열 그리드 (11 / 11 / 2) */}
       <div className="frame pay-frame">
@@ -73,6 +181,7 @@ const handlePay = () => {
                 className={`grid-item ${span} ${isSelected ? "selected" : ""}`}
                 onClick={() => handleSelect(m.id)}
                 aria-pressed={isSelected}
+                disabled={loading}
               > 
                 {m.type === "img" && m.src ? (
                   <img className="pay-logo" src={m.src} alt={m.label} />
@@ -87,8 +196,12 @@ const handlePay = () => {
 
       {/* 하단 고정 CTA */}
       <div className="fixed-cta">
-        <PrimaryButton onClick={handlePay} disabled={!selected} active={!!selected}>
-          결제하기
+        <PrimaryButton 
+          onClick={handlePay} 
+          disabled={!selected || loading} 
+          active={!!selected && !loading}
+        >
+          {loading ? '처리 중...' : '결제하기'}
         </PrimaryButton>
       </div>
     </div>
