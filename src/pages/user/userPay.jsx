@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 공용 스타일/컴포넌트
@@ -11,7 +11,7 @@ import PageTitle from "../components/PageTitle";
 import PrimaryButton from "../components/PrimaryButton";
 
 // API 헬퍼 가져오기
-import { paymentAPI } from "../../utils/apiHelper";
+import { paymentAPI, setTestToken, checkTokenStatus } from "../../utils/apiHelper";
 
 import backBut from "../../assets/img/backBut.png";
 import xBut from "../../assets/img/xBut.png";
@@ -38,6 +38,15 @@ export default function UserPayment() {
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // 컴포넌트 마운트 시 테스트 토큰 설정
+  useEffect(() => {
+    // 토큰이 없으면 테스트 토큰 설정
+    if (!checkTokenStatus()) {
+      console.log('토큰이 없어서 테스트 토큰을 설정합니다.');
+      setTestToken();
+    }
+  }, []);
 
   const handleSelect = (id) => {
     setSelected(id);

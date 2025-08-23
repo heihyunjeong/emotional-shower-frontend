@@ -23,6 +23,35 @@ export const removeToken = () => {
 };
 
 /**
+ * 테스트용 토큰 설정 (개발 환경에서만 사용)
+ */
+export const setTestToken = () => {
+  if (process.env.NODE_ENV === 'development') {
+    const testToken = 'test-jwt-token-for-development';
+    setToken(testToken);
+    console.log('테스트 토큰이 설정되었습니다:', testToken);
+    return testToken;
+  } else {
+    console.warn('테스트 토큰은 개발 환경에서만 설정할 수 있습니다.');
+    return null;
+  }
+};
+
+/**
+ * 토큰 상태 확인
+ */
+export const checkTokenStatus = () => {
+  const token = getToken();
+  if (token) {
+    console.log('현재 토큰:', token);
+    return true;
+  } else {
+    console.log('토큰이 설정되지 않았습니다.');
+    return false;
+  }
+};
+
+/**
  * 사용자 인증 API
  */
 export const authAPI = {
@@ -164,10 +193,17 @@ export const paymentAPI = {
   create: async (paymentData) => {
     try {
       const token = getToken();
+      if (!token) {
+        // 토큰이 없으면 자동으로 테스트 토큰 설정
+        console.log('토큰이 없어서 테스트 토큰을 자동 설정합니다.');
+        setTestToken();
+      }
+      
+      const currentToken = getToken();
       const data = await authenticatedApiCall(API_ENDPOINTS.PAYMENT.CREATE, {
         method: 'POST',
         body: JSON.stringify(paymentData)
-      }, token);
+      }, currentToken);
       
       return data;
     } catch (error) {
@@ -180,9 +216,16 @@ export const paymentAPI = {
   process: async (paymentId) => {
     try {
       const token = getToken();
+      if (!token) {
+        // 토큰이 없으면 자동으로 테스트 토큰 설정
+        console.log('토큰이 없어서 테스트 토큰을 자동 설정합니다.');
+        setTestToken();
+      }
+      
+      const currentToken = getToken();
       const data = await authenticatedApiCall(API_ENDPOINTS.PAYMENT.PROCESS(paymentId), {
         method: 'POST'
-      }, token);
+      }, currentToken);
       
       return data;
     } catch (error) {
@@ -345,5 +388,7 @@ export default {
   storeAPI,
   getToken,
   setToken,
-  removeToken
+  removeToken,
+  setTestToken,
+  checkTokenStatus
 };
