@@ -112,7 +112,7 @@ export default function PaymentSuccess() {
       } catch (error) {
         console.error('Payment confirmation error:', error);
         setError(error.message);
-        // 에러 발생 시 처리 상태 초기화 (재시도 가능하도록)
+        // 에러 발생 시 처리 상태 초기화 (재시도 가능하도록)//
         hasProcessed.current = false;
         setLoading(false);
       }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// 공용 스타일/컴포넌트
+// 공용 스타일/컴포넌트//
 import "../../assets/css/components/uiCommon.css";
 import "../../assets/css/user/userPay.css";
 
@@ -54,7 +54,7 @@ export default function UserPayment() {
 
   const handleSelect = (id) => {
     setSelected(id);
-    setError(null); // 에러 메시지 초기화
+    setError(null); // 에러 메시지 초기화ㅡㅡ
   };
 
   const goBack = () => navigate(-1);

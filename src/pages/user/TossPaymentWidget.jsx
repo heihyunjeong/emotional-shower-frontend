@@ -16,7 +16,7 @@ import { paymentAPI } from "../../utils/apiHelper";
 import backBut from "../../assets/img/backBut.png";
 import xBut from "../../assets/img/xBut.png";
 
-// 토스페이먼트 클라이언트 키
+// 토스페이먼트 클라이언트 키//
 const CLIENT_KEY = process.env.REACT_APP_TOSS_CLIENT_KEY || 'test_ck_GePWvyJnrKJn1WYnNPKqVgLzN97E';
 
 export default function TossPaymentWidget() {

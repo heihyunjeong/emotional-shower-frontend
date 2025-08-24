@@ -193,7 +193,7 @@ export const paymentAPI = {
         console.log('토큰이 없어서 테스트 토큰을 자동 설정합니다.');
         token = setTestToken();
         
-        // 여전히 토큰이 없으면 에러
+        // 여전히 토큰이 없으면 에러ㅡ
         if (!token) {
           throw new Error('인증 토큰을 설정할 수 없습니다.');
         }

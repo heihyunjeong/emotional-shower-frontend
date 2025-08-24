@@ -52,7 +52,7 @@ export default function PaymentFail() {
           console.log('✅ 백엔드 결제 실패 처리 완료');
         } catch (error) {
           console.error('❌ 백엔드 결제 실패 처리 오류:', error);
-          // 에러 발생 시 보고 상태 초기화 (재시도 가능하도록)
+          // 에러 발생 시 보고 상태 초기화 (재시도 가능하도록)//
           hasReported.current = false;
         }
       }
