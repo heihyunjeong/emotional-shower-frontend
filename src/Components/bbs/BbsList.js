@@ -1,30 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import axios from "axios";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+
+import {
+  bbsListState,
+  currentPageState,
+  pageSizeState,
+  totalPagesState,
+  totalCntState,
+  choiceValState,
+  searchValState,
+  searchParamsSelector,
+  isLoadingState
+} from '../../state/bbsState';
 
 import "../../css/bbslist.css";
 import "../../css/page.css";
 
 function BbsList() {
-  const [bbsList, setBbsList] = useState([]);
-
-  // 검색용 Hook
-  const [choiceVal, setChoiceVal] = useState("");
-  const [searchVal, setSearchVal] = useState("");
-
-  // Paging
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalCnt, setTotalCnt] = useState(0);
+  // Recoil 상태 관리
+  const [bbsList, setBbsList] = useRecoilState(bbsListState);
+  const [page, setPage] = useRecoilState(currentPageState);
+  const [pageSize, setPageSize] = useRecoilState(pageSizeState);
+  const [totalPages, setTotalPages] = useRecoilState(totalPagesState);
+  const [totalCnt, setTotalCnt] = useRecoilState(totalCntState);
+  const [choiceVal, setChoiceVal] = useRecoilState(choiceValState);
+  const [searchVal, setSearchVal] = useRecoilState(searchValState);
+  const setIsLoading = useSetRecoilState(isLoadingState);
+  
+  const searchParams = useRecoilValue(searchParamsSelector);
 
   // 게시글 전체 조회
-  const getBbsList = async (page) => {
+  const getBbsList = async (pageNum) => {
     try {
-		const response = await axios.get("http://localhost:8989/board/list", {
-			params: {"page": page - 1},
-		  });
+      setIsLoading(true);
+      const response = await axios.get("http://localhost:8989/board/list", {
+        params: {"page": pageNum - 1},
+      });
 
       console.log("[BbsList.js] useEffect() success :D");
       console.log(response.data);
@@ -36,19 +50,17 @@ function BbsList() {
     } catch (error) {
       console.log("[BbsList.js] useEffect() error :<");
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   // 게시글 검색
   const search = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get("http://localhost:8989/board/search", {
-        params: {
-          page: page - 1,
-          title: choiceVal === "title" ? searchVal : "",
-          content: choiceVal === "content" ? searchVal : "",
-          writerName: choiceVal === "writer" ? searchVal : "",
-        },
+        params: searchParams,
       });
 
       console.log("[BbsList.js searchBtn()] success :D");
@@ -59,6 +71,8 @@ function BbsList() {
     } catch (error) {
       console.log("[BbsList.js searchBtn()] error :<");
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,13 +82,18 @@ function BbsList() {
   }, []);
 
   // 검색 조건 저장
-  const changeChoice = (event) => { setChoiceVal(event.target.value);};
-  const changeSearch = (event) => { setSearchVal(event.target.value);};
+  const changeChoice = (event) => { 
+    setChoiceVal(event.target.value);
+  };
+  
+  const changeSearch = (event) => { 
+    setSearchVal(event.target.value);
+  };
 
   // 페이징 보여주기 
-  const changePage = (page) => {
-    setPage(page);
-    getBbsList(page);
+  const changePage = (pageNum) => {
+    setPage(pageNum);
+    getBbsList(pageNum);
   };
 
   return (
@@ -172,43 +191,5 @@ function TableRow(props) {
     </tr>
   );
 }
-
-// /* 글 목록 테이블 행 컴포넌트 */
-// function TableRow(props) {
-// 	const bbs = props.obj;
-
-// 	return (
-// 			<tr>
-				
-// 					<th>{props.cnt}</th>
-// 					{
-// 						(bbs.del == 0) ?
-// 						// 삭제되지 않은 게시글
-// 						<>
-// 							<td >
-// 								<Arrow depth={bbs.depth}></Arrow> &nbsp; { /* 답글 화살표 */}
-
-// 								<Link to={{ pathname: `/bbsdetail/${bbs.seq}` }}> { /* 게시글 상세 링크 */}
-// 									<span className="underline bbs-title" >{bbs.title} </span> { /* 게시글 제목 */}
-// 								</Link>
-// 							</td>
-// 							<td>{bbs.id}</td>
-// 						</>
-// 						:
-// 						// 삭제된 게시글
-// 						<>
-// 							<td>
-// 								<Arrow depth={bbs.depth}></Arrow> &nbsp; { /* 답글 화살표 */}
-
-// 								<span className="del-span">⚠️ 이 글은 작성자에 의해 삭제됐습니다.</span>
-// 							</td>
-// 						</>	
-// 					}
-					
-				
-// 			</tr>
-		
-// 	);
-// }
 
 export default BbsList;

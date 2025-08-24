@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../context/AuthProvider";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../state/authState';
 
 function Header() {
-  const { auth, setAuth } = useContext(AuthContext);
+  const auth = useRecoilValue(userState);
 
   return (
     <header>

@@ -14,13 +14,23 @@
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "recoil": "^0.7.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    
+    "dev-deploy": "npm run build && xcopy build\\* ..\\react-spring-blog-backend\\src\\main\\resources\\static\\ /E /Y /I",
+    "dev-start": "npm run dev-deploy && cd ../react-spring-blog-backend && .\\gradlew.bat bootRun",
+    "prod-deploy": "npm run build && xcopy build\\* ..\\react-spring-blog-backend\\src\\main\\resources\\static\\ /E /Y /I && cd ../react-spring-blog-backend && .\\gradlew.bat build",
+    "clean": "rmdir /s /q build && cd ../react-spring-blog-backend && .\\gradlew.bat clean",
+    "clean-deploy": "npm run clean && npm run prod-deploy",
+    
+    "dev-manual": "npm run dev-deploy",
+    "backend-run": "cd ../react-spring-blog-backend && .\\gradlew.bat bootRun"
   },
   "eslintConfig": {
     "extends": [

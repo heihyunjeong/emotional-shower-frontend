@@ -1,5 +1,12 @@
-🤸How to start?
-=
+# 버전 확인
+node -v
+npm -v
+
+# package-lock.json이 있을 때 더 재현성 좋은 설치
+npm ci
+
+# 없다면 일반 설치
+npm install
 
 ### `npm install`
 
