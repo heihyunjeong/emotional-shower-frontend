@@ -14,7 +14,7 @@ export const KAKAO_CONFIG = {
   
   // 리다이렉트 URI
   REDIRECT_URI: process.env.NODE_ENV === 'production' 
-    ? 'https://yourdomain.com/auth/kakao/callback'
+    ? 'https://www.borini.app/auth/kakao/callback'
     : 'http://localhost:3000/auth/kakao/callback',
   
   // 카카오 API 엔드포인트
