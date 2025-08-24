@@ -25,6 +25,8 @@ import PasswordConfirm from "./pages/passwordConfirm";
 import Phone from "./pages/phone";
 
 import FindVerify from "./pages/FindVerify";
+// auth
+import KakaoCallback from "./pages/auth/KakaoCallback";
 // user
   //home
 import UserHome from "./pages/user/userHome";
@@ -74,6 +76,8 @@ function App() {
           <Route path="/passwordconfirm" element={<PasswordConfirm />} />
           <Route path="/phone" element={<Phone />} />
           <Route path="/find/id" element={<FindVerify />} />
+          {/* Auth Callbacks */}
+          <Route path="/auth/kakao/callback" element={<KakaoCallback />} />
           {/*User*/}
           <Route path="/home" element={<UserHome />} />          
           <Route path="/storing/equipmentselection" element={<UserEquipmentSelect />} />   

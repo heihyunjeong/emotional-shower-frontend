@@ -2,13 +2,20 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../assets/css/user/userMy.css';
-import UserNav from './userNav'; 
+import UserNav from './userNav';
+
+// 카카오 로그인 관련 import
+import { kakaoAuth, clearUserSession, getUserSession } from '../../utils/kakaoAuth'; 
 
 import packaged from "../../assets/img/packaged.png";
 import profile from "../../assets/img/person.png";
 
 export default function MyPage() {
   const navigate = useNavigate();
+  
+  // 현재 로그인한 사용자 정보 가져오기
+  const session = getUserSession();
+  const user = session?.user;
 
   // ✅ 네비게이션 클릭 시 이동 처리
   const handleNav = (key) => {
@@ -26,6 +33,35 @@ export default function MyPage() {
     if (menu === 'serviceinfo') navigate('/home'); // 임시로 홈으로 이동
   };
 
+  // ✅ 로그아웃 처리
+  const handleLogout = async () => {
+    const confirmLogout = window.confirm('정말 로그아웃하시겠습니까?');
+    
+    if (!confirmLogout) return;
+
+    try {
+      // 현재 세션 정보 가져오기
+      const session = getUserSession();
+      
+      if (session && session.tokens) {
+        // 카카오 서버에 로그아웃 요청
+        await kakaoAuth.logout(session.tokens.accessToken);
+      }
+    } catch (error) {
+      console.error('카카오 로그아웃 오류:', error);
+      // 서버 로그아웃 실패해도 로컬 세션은 정리
+    } finally {
+      // 로컬 세션 정리
+      clearUserSession();
+      
+      // 로그아웃 완료 알림
+      alert('로그아웃되었습니다.');
+      
+      // 로그인 페이지로 이동
+      navigate('/easylogin');
+    }
+  };
+
   return (
     <div className="mypage-container">
       {/* Top Area */}
@@ -39,9 +75,17 @@ export default function MyPage() {
         <section className="head">
           <div className="profile">
             <div className="profile-pic">
-              <img src={profile} alt="프로필" />
+              <img 
+                src={user?.thumbnailImage || user?.profileImage || profile} 
+                alt="프로필" 
+                onError={(e) => {
+                  e.target.src = profile; // 이미지 로드 실패 시 기본 이미지로 대체
+                }}
+              />
             </div>
-            <span className="profile-name">김보린 님</span>
+            <span className="profile-name">
+              {user?.nickname ? `${user.nickname} 님` : '사용자 님'}
+            </span>
           </div>
           <div className="badge">
             <span className="badge-text">기본플랜</span>
@@ -89,6 +133,12 @@ export default function MyPage() {
           </div>
           <div className="contents-item" onClick={() => handleMenuClick('serviceinfo')}>
             <span className="contents-item__title">서비스 정보</span>
+            <div className="contents-item__icon"><div className="Vector" /></div>
+          </div>
+
+          {/* ✅ 로그아웃 메뉴 추가 */}
+          <div className="contents-item logout-item" onClick={handleLogout}>
+            <span className="contents-item__title logout-title">로그아웃</span>
             <div className="contents-item__icon"><div className="Vector" /></div>
           </div>
         </div>

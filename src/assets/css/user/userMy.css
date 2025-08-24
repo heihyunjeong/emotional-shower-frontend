@@ -353,3 +353,18 @@
   color: var(--black);
   line-height: 29px;
 }
+
+/* 로그아웃 메뉴 스타일 */
+.logout-item {
+  border-top: 8px solid var(--bg-light) !important;
+  margin-top: 8px;
+}
+
+.logout-item:hover {
+  background-color: #fff5f5 !important;
+}
+
+.logout-title {
+  color: var(--accent) !important;
+  font-weight: 600 !important;
+}

@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Firebase imports
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import app from '../firebase'; // Firebase 앱 인스턴스
+
+// Kakao imports
+import { kakaoAuth, saveUserSession, getUserSession, isLoggedIn } from '../utils/kakaoAuth';
 
 // CSS
 import "../assets/css/all.css";
@@ -17,6 +20,14 @@ function EasyLogin() {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [showPw, setShowPw] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // 컴포넌트 마운트 시 로그인 상태 확인
+  useEffect(() => {
+    if (isLoggedIn()) {
+      navigate("/home");
+    }
+  }, [navigate]);
 
   const goHome = (e) => {
     e?.preventDefault();
@@ -35,6 +46,36 @@ function EasyLogin() {
     } catch (error) {
       console.error("Google login failed:", error);
       alert("구글 로그인에 실패했습니다. 다시 시도해 주세요.");
+    }
+  };
+
+  // 카카오 로그인 처리
+  const handleKakaoLogin = async () => {
+    if (isLoading) return;
+    
+    setIsLoading(true);
+    
+    try {
+      // 모바일 환경에서 카카오톡 앱으로 로그인 시도
+      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      if (isMobile && kakaoAuth.tryKakaoTalkLogin()) {
+        // 카카오톡 앱으로 로그인 시도 성공
+        return;
+      }
+      
+      // 웹 브라우저에서 카카오 로그인
+      const state = kakaoAuth.generateState();
+      sessionStorage.setItem('kakao_state', state);
+      
+      const authUrl = kakaoAuth.getEasyLoginUrl(state);
+      window.location.href = authUrl;
+      
+    } catch (error) {
+      console.error('카카오 로그인 오류:', error);
+      alert('카카오 로그인에 실패했습니다. 다시 시도해 주세요.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -109,9 +150,10 @@ function EasyLogin() {
           <button
             className="eL-social eL-kakao"
             aria-label="카카오로 로그인"
-            onClick={() => handleSocialLogin('kakao')}
+            onClick={handleKakaoLogin}
+            disabled={isLoading}
           >
-            K
+            {isLoading ? '...' : 'K'}
           </button>
           <button
             className="eL-social eL-naver"
