@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 공용 스타일/컴포넌트
@@ -12,6 +12,9 @@ import PrimaryButton from "../components/PrimaryButton";
 
 // API 헬퍼 가져오기
 import { paymentAPI, setTestToken, checkTokenStatus } from "../../utils/apiHelper";
+
+// 카카오 로그인 사용자 정보 가져오기
+import { getUserSession } from "../../utils/kakaoAuth";
 
 import backBut from "../../assets/img/backBut.png";
 import xBut from "../../assets/img/xBut.png";
@@ -38,6 +41,7 @@ export default function UserPayment() {
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const isProcessing = useRef(false); // 중복 처리 방지
 
   // 컴포넌트 마운트 시 테스트 토큰 설정
   useEffect(() => {
@@ -59,11 +63,34 @@ export default function UserPayment() {
   // 결제 생성 API 호출
   const createPayment = async (paymentMethod, amount = 100, description = "Borini 서비스 결제") => {
     try {
-      const data = await paymentAPI.create({
+      // 로그인한 사용자 정보 가져오기
+      const session = getUserSession();
+      const user = session?.user;
+
+      // orderId 생성 (백엔드에서 transactionId로 사용됨)
+      const orderId = `order_${Date.now()}`;
+
+      // 더 상세한 결제 정보 구성
+      const paymentData = {
         paymentMethod,
         amount,
-        description
-      });
+        description: `${description} (주문번호: ${orderId})`,
+        // 추가 결제 정보
+        orderId: orderId,
+        orderName: description,
+        customerName: user?.nickname || '고객',
+        customerEmail: user?.email || 'customer@example.com',
+        customerKey: user?.id ? `customer_${user.id}` : `customer_${Date.now()}`,
+        userId: user?.id || null, // 카카오 사용자 ID
+        timestamp: new Date().toISOString(),
+        // 결제 상세 정보
+        paymentType: 'SERVICE', // 서비스 결제
+        serviceType: 'BORINI_STORAGE', // 보관 서비스
+        currency: 'KRW' // 원화
+      };
+
+      console.log('Creating payment with data:', paymentData);
+      const data = await paymentAPI.create(paymentData);
 
       return data;
     } catch (error) {
@@ -86,24 +113,47 @@ export default function UserPayment() {
   const handlePay = async () => {
     if (!selected) return;
 
+    // 중복 처리 방지
+    if (isProcessing.current) {
+      console.log('결제가 이미 처리 중입니다. 중복 실행을 방지합니다.');
+      return;
+    }
+
+    isProcessing.current = true;
     setLoading(true);
     setError(null);
 
     try {
       // 토스페이 선택 시 토스 결제 위젯 페이지로 이동
       if (selected === "tosspay") {
-        console.log('Navigating to Toss payment widget...');
+        console.log('Creating Toss payment record and navigating to widget...');
         
-        // 토스페이는 별도 API 호출 없이 바로 위젯으로 이동
+        // 1. 먼저 데이터베이스에 결제 정보 저장
+        const createResult = await createPayment(selected, 100, 'Borini 서비스 결제 (토스페이)');
+        
+        if (!createResult.success) {
+          throw new Error(createResult.message);
+        }
+
+        const paymentId = createResult.payment.id;
+        const transactionId = createResult.payment.transactionId; // 백엔드에서 생성된 transactionId
+        console.log('Toss payment created with ID:', paymentId, 'TransactionId:', transactionId);
+
+        // 로그인한 사용자 정보 가져오기
+        const session = getUserSession();
+        const user = session?.user;
+        
+        // 2. 토스 결제 위젯으로 이동 (결제 ID 포함)
         navigate("/user/toss-payment", { 
           state: { 
             paymentInfo: {
+              paymentId: paymentId, // 데이터베이스에 저장된 결제 ID
               amount: 100,
-              orderId: `order_${Date.now()}`,
+              orderId: transactionId, // 백엔드에서 생성된 transactionId 사용
               orderName: 'Borini 서비스 결제',
-              customerName: '고객',
-              customerEmail: 'customer@example.com',
-              customerKey: `customer_${Date.now()}`
+              customerName: user?.nickname || '고객',
+              customerEmail: user?.email || 'customer@example.com',
+              customerKey: user?.id ? `customer_${user.id}` : `customer_${Date.now()}`
             }
           } 
         });
@@ -131,11 +181,25 @@ export default function UserPayment() {
         throw new Error(processResult.message);
       }
 
-      // 3. 완료 페이지로 이동
+      // 3. 결제 상태를 완료로 업데이트
+      console.log('Updating payment status to completed...');
+      try {
+        await paymentAPI.updateStatus(paymentId, 'COMPLETED');
+        console.log('Payment status updated to COMPLETED');
+      } catch (statusError) {
+        console.warn('Failed to update payment status:', statusError);
+        // 상태 업데이트 실패해도 결제 완료 페이지로 이동
+      }
+
+      // 4. 완료 페이지로 이동
       console.log('Payment completed, navigating to success page...');
       navigate("/storing/paymentcomplete", { 
         state: { 
-          paymentInfo: processResult.payment,
+          paymentInfo: {
+            ...processResult.payment,
+            paymentId: paymentId,
+            status: 'COMPLETED'
+          },
           paymentMethod: selected 
         } 
       });
@@ -145,6 +209,7 @@ export default function UserPayment() {
       setError(error.message || '결제 처리 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
+      isProcessing.current = false; // 처리 완료 후 초기화
     }
   };
 

@@ -1,5 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+// API 헬퍼 가져오기
+import { paymentAPI } from "../../utils/apiHelper";
 import '../../assets/css/user/userPayComp.css';
 import PrimaryButton from "../components/PrimaryButton";
 

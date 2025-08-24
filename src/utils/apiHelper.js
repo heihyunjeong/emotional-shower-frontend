@@ -250,17 +250,146 @@ export const paymentAPI = {
     }
   },
 
+  // 결제 상태 업데이트
+  updateStatus: async (paymentId, status) => {
+    try {
+      const token = getToken();
+      if (!token) {
+        console.log('토큰이 없어서 테스트 토큰을 자동 설정합니다.');
+        setTestToken();
+      }
+      
+      const currentToken = getToken();
+      const data = await authenticatedApiCall(`${API_ENDPOINTS.PAYMENT.PROCESS(paymentId).replace('/process', '/status')}`, {
+        method: 'PUT',
+        body: JSON.stringify({ status })
+      }, currentToken);
+      
+      return data;
+    } catch (error) {
+      console.error('Update payment status failed:', error);
+      throw error;
+    }
+  },
+
   // 결제 취소
   cancel: async (paymentId) => {
     try {
       const token = getToken();
       const data = await authenticatedApiCall(API_ENDPOINTS.PAYMENT.CANCEL(paymentId), {
-        method: 'POST'
+        method: 'DELETE'
       }, token);
       
       return data;
     } catch (error) {
       console.error('Cancel payment failed:', error);
+      throw error;
+    }
+  },
+
+  // 결제 성공 처리 (토스페이용)
+  success: async (paymentData) => {
+    try {
+      const token = getToken();
+      if (!token) {
+        console.log('토큰이 없어서 테스트 토큰을 자동 설정합니다.');
+        setTestToken();
+      }
+      
+      const currentToken = getToken();
+      const data = await authenticatedApiCall(API_ENDPOINTS.PAYMENT.SUCCESS, {
+        method: 'POST',
+        body: JSON.stringify(paymentData)
+      }, currentToken);
+      
+      return data;
+    } catch (error) {
+      console.error('Payment success processing failed:', error);
+      throw error;
+    }
+  },
+
+  // 결제 실패 처리 (토스페이용)
+  fail: async (failData) => {
+    try {
+      const token = getToken();
+      if (!token) {
+        console.log('토큰이 없어서 테스트 토큰을 자동 설정합니다.');
+        setTestToken();
+      }
+      
+      const currentToken = getToken();
+      const data = await authenticatedApiCall(API_ENDPOINTS.PAYMENT.FAIL, {
+        method: 'POST',
+        body: JSON.stringify(failData)
+      }, currentToken);
+      
+      return data;
+    } catch (error) {
+      console.error('Payment fail processing failed:', error);
+      throw error;
+    }
+  },
+
+  // 결제 정보 조회
+  getById: async (paymentId) => {
+    try {
+      const token = getToken();
+      if (!token) {
+        console.log('토큰이 없어서 테스트 토큰을 자동 설정합니다.');
+        setTestToken();
+      }
+      
+      const currentToken = getToken();
+      const data = await authenticatedApiCall(API_ENDPOINTS.PAYMENT.GET_BY_ID(paymentId), {
+        method: 'GET'
+      }, currentToken);
+      
+      return data;
+    } catch (error) {
+      console.error('Get payment by ID failed:', error);
+      throw error;
+    }
+  },
+
+  // 결제 상세 내역 조회
+  getDetails: async (paymentId) => {
+    try {
+      const token = getToken();
+      if (!token) {
+        console.log('토큰이 없어서 테스트 토큰을 자동 설정합니다.');
+        setTestToken();
+      }
+      
+      const currentToken = getToken();
+      const data = await authenticatedApiCall(API_ENDPOINTS.PAYMENT.DETAILS(paymentId), {
+        method: 'GET'
+      }, currentToken);
+      
+      return data;
+    } catch (error) {
+      console.error('Get payment details failed:', error);
+      throw error;
+    }
+  },
+
+  // 결제 로그 조회
+  getLogs: async (paymentId) => {
+    try {
+      const token = getToken();
+      if (!token) {
+        console.log('토큰이 없어서 테스트 토큰을 자동 설정합니다.');
+        setTestToken();
+      }
+      
+      const currentToken = getToken();
+      const data = await authenticatedApiCall(API_ENDPOINTS.PAYMENT.LOGS(paymentId), {
+        method: 'GET'
+      }, currentToken);
+      
+      return data;
+    } catch (error) {
+      console.error('Get payment logs failed:', error);
       throw error;
     }
   }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // 공용 스타일/컴포넌트
@@ -10,6 +10,9 @@ import ProgressBar from "../components/ProgressBar";
 import PageTitle from "../components/PageTitle";
 import PrimaryButton from "../components/PrimaryButton";
 
+// API 헬퍼 가져오기
+import { paymentAPI } from "../../utils/apiHelper";
+
 import backBut from "../../assets/img/backBut.png";
 import xBut from "../../assets/img/xBut.png";
 
@@ -19,11 +22,17 @@ export default function PaymentSuccess() {
   const [paymentData, setPaymentData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const hasProcessed = useRef(false); // 중복 처리 방지
 
   const goHome = () => navigate("/home");
 
   useEffect(() => {
     const confirmPayment = async () => {
+      // 이미 처리된 경우 중복 실행 방지
+      if (hasProcessed.current) {
+        console.log('결제가 이미 처리되었습니다. 중복 실행을 방지합니다.');
+        return;
+      }
       try {
         const paymentKey = searchParams.get('paymentKey');
         const orderId = searchParams.get('orderId');
@@ -33,11 +42,28 @@ export default function PaymentSuccess() {
           throw new Error('결제 정보가 올바르지 않습니다.');
         }
 
-        // 개발 환경에서는 모의 데이터 사용
+        // 처리 시작 표시
+        hasProcessed.current = true;
         console.log('결제 승인 처리 중...', { paymentKey, orderId, amount });
         
-        // 실제 결제 시뮬레이션을 위한 약간의 지연
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // 백엔드에 결제 성공 정보 전송
+        const paymentSuccessData = {
+          paymentKey,
+          orderId,
+          totalAmount: parseInt(amount),
+          method: '카드',
+          status: 'DONE',
+          approvedAt: new Date().toISOString()
+        };
+
+        // 백엔드 API 호출
+        const backendResponse = await paymentAPI.success(paymentSuccessData);
+        
+        if (!backendResponse.success) {
+          throw new Error(backendResponse.message || '결제 처리 중 오류가 발생했습니다.');
+        }
+
+        console.log('✅ 백엔드 결제 처리 완료:', backendResponse);
         
         const mockData = {
           paymentKey,
@@ -47,6 +73,7 @@ export default function PaymentSuccess() {
           totalAmount: parseInt(amount),
           status: 'DONE',
           approvedAt: new Date().toISOString(),
+          paymentId: backendResponse.payment?.id, // 백엔드에서 받은 결제 ID
           receipt: {
             url: '#'
           }
@@ -85,12 +112,14 @@ export default function PaymentSuccess() {
       } catch (error) {
         console.error('Payment confirmation error:', error);
         setError(error.message);
+        // 에러 발생 시 처리 상태 초기화 (재시도 가능하도록)
+        hasProcessed.current = false;
         setLoading(false);
       }
     };
 
     confirmPayment();
-  }, [searchParams]);
+  }, [searchParams]); // 의존성 배열에서 isProcessed 제거
 
   if (loading) {
     return (

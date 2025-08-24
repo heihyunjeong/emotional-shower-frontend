@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // 공용 스타일/컴포넌트
@@ -10,12 +10,16 @@ import ProgressBar from "../components/ProgressBar";
 import PageTitle from "../components/PageTitle";
 import PrimaryButton from "../components/PrimaryButton";
 
+// API 헬퍼 가져오기
+import { paymentAPI } from "../../utils/apiHelper";
+
 import backBut from "../../assets/img/backBut.png";
 import xBut from "../../assets/img/xBut.png";
 
 export default function PaymentFail() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const hasReported = useRef(false); // 중복 처리 방지
   
   const errorCode = searchParams.get('code');
   const errorMessage = searchParams.get('message');
@@ -24,6 +28,38 @@ export default function PaymentFail() {
   const goBack = () => navigate(-1);
   const goHome = () => navigate("/home");
   const retryPayment = () => navigate("/user/payment");
+
+  // 컴포넌트 마운트 시 백엔드에 결제 실패 정보 전송
+  React.useEffect(() => {
+    const reportPaymentFailure = async () => {
+      // 이미 보고된 경우 중복 실행 방지
+      if (hasReported.current) {
+        console.log('결제 실패가 이미 보고되었습니다. 중복 실행을 방지합니다.');
+        return;
+      }
+
+      if (orderId && errorCode) {
+        hasReported.current = true;
+        try {
+          const failData = {
+            orderId,
+            code: errorCode,
+            message: errorMessage || '결제 실패'
+          };
+
+          console.log('결제 실패 정보를 백엔드에 전송:', failData);
+          await paymentAPI.fail(failData);
+          console.log('✅ 백엔드 결제 실패 처리 완료');
+        } catch (error) {
+          console.error('❌ 백엔드 결제 실패 처리 오류:', error);
+          // 에러 발생 시 보고 상태 초기화 (재시도 가능하도록)
+          hasReported.current = false;
+        }
+      }
+    };
+
+    reportPaymentFailure();
+  }, [orderId, errorCode, errorMessage]);
 
   // 에러 코드에 따른 메시지 매핑
   const getErrorMessage = (code, message) => {

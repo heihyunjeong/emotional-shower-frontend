@@ -4,22 +4,22 @@
 const API_CONFIG = {
   // 개발 환경
   development: {
-    BASE_URL: 'http://localhost:8080',
-    API_URL: 'http://localhost:8080/api',
+    BASE_URL: 'http://localhost:8181',
+    API_URL: 'http://localhost:8181/api',
     TIMEOUT: 10000, // 10초
   },
   
   // 프로덕션 환경
   production: {
-    BASE_URL: 'https://your-production-domain.com',
-    API_URL: 'https://your-production-domain.com/api',
+    BASE_URL: 'http://183.111.154.188:3000',
+    API_URL: 'http://183.111.154.188:3000/api',
     TIMEOUT: 15000, // 15초
   },
   
   // 테스트 환경
   test: {
-    BASE_URL: 'http://localhost:8080',
-    API_URL: 'http://localhost:8080/api',
+    BASE_URL: 'http://localhost:8181',
+    API_URL: 'http://localhost:8181/api',
     TIMEOUT: 5000, // 5초
   }
 };
@@ -57,6 +57,12 @@ export const API_ENDPOINTS = {
     PROCESS: (id) => `${currentConfig.API_URL}/payments/${id}/process`,
     HISTORY: `${currentConfig.API_URL}/payments/history`,
     CANCEL: (id) => `${currentConfig.API_URL}/payments/${id}/cancel`,
+    SUCCESS: `${currentConfig.API_URL}/payments/success`,
+    FAIL: `${currentConfig.API_URL}/payments/fail`,
+    STATUS: (id) => `${currentConfig.API_URL}/payments/${id}/status`,
+    DETAILS: (id) => `${currentConfig.API_URL}/payments/${id}/details`,
+    LOGS: (id) => `${currentConfig.API_URL}/payments/${id}/logs`,
+    GET_BY_ID: (id) => `${currentConfig.API_URL}/payments/${id}`,
   },
   
   // 장비 관련

@@ -10,6 +10,9 @@ import ProgressBar from "../components/ProgressBar";
 import PageTitle from "../components/PageTitle";
 import PrimaryButton from "../components/PrimaryButton";
 
+// API 헬퍼 가져오기
+import { paymentAPI } from "../../utils/apiHelper";
+
 import backBut from "../../assets/img/backBut.png";
 import xBut from "../../assets/img/xBut.png";
 
